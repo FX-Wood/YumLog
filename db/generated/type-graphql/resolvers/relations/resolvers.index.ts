@@ -1,0 +1,10 @@
+export { FoodRelationsResolver } from "./Food/FoodRelationsResolver";
+export { FoodInMealRelationsResolver } from "./FoodInMeal/FoodInMealRelationsResolver";
+export { FoodInRecipeRelationsResolver } from "./FoodInRecipe/FoodInRecipeRelationsResolver";
+export { MealRelationsResolver } from "./Meal/MealRelationsResolver";
+export { ProfileRelationsResolver } from "./Profile/ProfileRelationsResolver";
+export { RecipeRelationsResolver } from "./Recipe/RecipeRelationsResolver";
+export { UnitRelationsResolver } from "./Unit/UnitRelationsResolver";
+export { UserRelationsResolver } from "./User/UserRelationsResolver";
+export { WeighInRelationsResolver } from "./WeighIn/WeighInRelationsResolver";
+export { WorkoutRelationsResolver } from "./Workout/WorkoutRelationsResolver";

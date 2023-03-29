@@ -1,0 +1,12 @@
+export { AggregateFoodInRecipeArgs } from "./AggregateFoodInRecipeArgs";
+export { CreateManyFoodInRecipeArgs } from "./CreateManyFoodInRecipeArgs";
+export { CreateOneFoodInRecipeArgs } from "./CreateOneFoodInRecipeArgs";
+export { DeleteManyFoodInRecipeArgs } from "./DeleteManyFoodInRecipeArgs";
+export { DeleteOneFoodInRecipeArgs } from "./DeleteOneFoodInRecipeArgs";
+export { FindFirstFoodInRecipeArgs } from "./FindFirstFoodInRecipeArgs";
+export { FindManyFoodInRecipeArgs } from "./FindManyFoodInRecipeArgs";
+export { FindUniqueFoodInRecipeArgs } from "./FindUniqueFoodInRecipeArgs";
+export { GroupByFoodInRecipeArgs } from "./GroupByFoodInRecipeArgs";
+export { UpdateManyFoodInRecipeArgs } from "./UpdateManyFoodInRecipeArgs";
+export { UpdateOneFoodInRecipeArgs } from "./UpdateOneFoodInRecipeArgs";
+export { UpsertOneFoodInRecipeArgs } from "./UpsertOneFoodInRecipeArgs";

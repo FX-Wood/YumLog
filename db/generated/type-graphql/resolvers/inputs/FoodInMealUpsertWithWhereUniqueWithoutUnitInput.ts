@@ -1,0 +1,27 @@
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { FoodInMealCreateWithoutUnitInput } from "../inputs/FoodInMealCreateWithoutUnitInput";
+import { FoodInMealUpdateWithoutUnitInput } from "../inputs/FoodInMealUpdateWithoutUnitInput";
+import { FoodInMealWhereUniqueInput } from "../inputs/FoodInMealWhereUniqueInput";
+
+@TypeGraphQL.InputType("FoodInMealUpsertWithWhereUniqueWithoutUnitInput", {
+  isAbstract: true
+})
+export class FoodInMealUpsertWithWhereUniqueWithoutUnitInput {
+  @TypeGraphQL.Field(_type => FoodInMealWhereUniqueInput, {
+    nullable: false
+  })
+  where!: FoodInMealWhereUniqueInput;
+
+  @TypeGraphQL.Field(_type => FoodInMealUpdateWithoutUnitInput, {
+    nullable: false
+  })
+  update!: FoodInMealUpdateWithoutUnitInput;
+
+  @TypeGraphQL.Field(_type => FoodInMealCreateWithoutUnitInput, {
+    nullable: false
+  })
+  create!: FoodInMealCreateWithoutUnitInput;
+}
