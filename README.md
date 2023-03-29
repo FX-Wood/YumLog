@@ -4,7 +4,7 @@ Yumlog is a diet tracking tool built to explore some fun web technologies
 - React
 - Next.js
 - Typescript
-- Graphql
+- Graphql / Apollo
 - Prisma
 
 ## Devlog
@@ -13,6 +13,6 @@ Started with an initial brainstorm of the DB objects: [ here ]( ./docs/dbbrainst
 
 Then I refined that into a DB diagram here: [ dbdiagram.io/d/5cb4bbf ]( https://dbdiagram.io/d/5cb4bbfff7c5bb70c72fa383 )
 
-Next thing's next, time to make an app.
+Next thing's next, need the nextjs boilerplate
 
 
