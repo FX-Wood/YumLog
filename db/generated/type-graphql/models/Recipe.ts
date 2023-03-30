@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { FoodInRecipe } from "../models/FoodInRecipe";
+import { RecipeInMeal } from "../models/RecipeInMeal";
 import { User } from "../models/User";
 import { RecipeCount } from "../resolvers/outputs/RecipeCount";
 
@@ -28,6 +29,8 @@ export class Recipe {
   name!: string;
 
   foods?: FoodInRecipe[];
+
+  meals?: RecipeInMeal[];
 
   @TypeGraphQL.Field(_type => RecipeCount, {
     nullable: true

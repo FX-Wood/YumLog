@@ -3,7 +3,8 @@ import * as TypeGraphQL from "type-graphql";
 export enum UnitScalarFieldEnum {
   id = "id",
   name = "name",
-  abbreviation = "abbreviation"
+  shortname = "shortname",
+  volume = "volume"
 }
 TypeGraphQL.registerEnumType(UnitScalarFieldEnum, {
   name: "UnitScalarFieldEnum",

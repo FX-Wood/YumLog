@@ -2,9 +2,9 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { DecimalFilter } from "../inputs/DecimalFilter";
 import { FoodInMealListRelationFilter } from "../inputs/FoodInMealListRelationFilter";
 import { FoodInRecipeListRelationFilter } from "../inputs/FoodInRecipeListRelationFilter";
+import { FoodNutritionListRelationFilter } from "../inputs/FoodNutritionListRelationFilter";
 import { IntFilter } from "../inputs/IntFilter";
 import { StringFilter } from "../inputs/StringFilter";
 
@@ -42,25 +42,10 @@ export class FoodWhereInput {
   })
   brand?: StringFilter | undefined;
 
-  @TypeGraphQL.Field(_type => IntFilter, {
+  @TypeGraphQL.Field(_type => FoodNutritionListRelationFilter, {
     nullable: true
   })
-  calories?: IntFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DecimalFilter, {
-    nullable: true
-  })
-  protein?: DecimalFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DecimalFilter, {
-    nullable: true
-  })
-  fat?: DecimalFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DecimalFilter, {
-    nullable: true
-  })
-  carbs?: DecimalFilter | undefined;
+  nutrition?: FoodNutritionListRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => FoodInMealListRelationFilter, {
     nullable: true

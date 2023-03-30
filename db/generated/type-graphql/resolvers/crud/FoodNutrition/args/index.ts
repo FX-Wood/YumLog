@@ -1,0 +1,12 @@
+export { AggregateFoodNutritionArgs } from "./AggregateFoodNutritionArgs";
+export { CreateManyFoodNutritionArgs } from "./CreateManyFoodNutritionArgs";
+export { CreateOneFoodNutritionArgs } from "./CreateOneFoodNutritionArgs";
+export { DeleteManyFoodNutritionArgs } from "./DeleteManyFoodNutritionArgs";
+export { DeleteOneFoodNutritionArgs } from "./DeleteOneFoodNutritionArgs";
+export { FindFirstFoodNutritionArgs } from "./FindFirstFoodNutritionArgs";
+export { FindManyFoodNutritionArgs } from "./FindManyFoodNutritionArgs";
+export { FindUniqueFoodNutritionArgs } from "./FindUniqueFoodNutritionArgs";
+export { GroupByFoodNutritionArgs } from "./GroupByFoodNutritionArgs";
+export { UpdateManyFoodNutritionArgs } from "./UpdateManyFoodNutritionArgs";
+export { UpdateOneFoodNutritionArgs } from "./UpdateOneFoodNutritionArgs";
+export { UpsertOneFoodNutritionArgs } from "./UpsertOneFoodNutritionArgs";

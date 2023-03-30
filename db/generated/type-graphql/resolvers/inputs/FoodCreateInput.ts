@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { FoodInMealCreateNestedManyWithoutFoodInput } from "../inputs/FoodInMealCreateNestedManyWithoutFoodInput";
 import { FoodInRecipeCreateNestedManyWithoutFoodInput } from "../inputs/FoodInRecipeCreateNestedManyWithoutFoodInput";
+import { FoodNutritionCreateNestedManyWithoutFoodInput } from "../inputs/FoodNutritionCreateNestedManyWithoutFoodInput";
 
 @TypeGraphQL.InputType("FoodCreateInput", {
   isAbstract: true
@@ -19,25 +20,10 @@ export class FoodCreateInput {
   })
   brand!: string;
 
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+  @TypeGraphQL.Field(_type => FoodNutritionCreateNestedManyWithoutFoodInput, {
+    nullable: true
   })
-  calories!: number;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  protein!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  fat!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  carbs!: Prisma.Decimal;
+  nutrition?: FoodNutritionCreateNestedManyWithoutFoodInput | undefined;
 
   @TypeGraphQL.Field(_type => FoodInMealCreateNestedManyWithoutFoodInput, {
     nullable: true

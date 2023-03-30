@@ -1,9 +1,11 @@
 export { Food } from "./Food";
 export { FoodInMeal } from "./FoodInMeal";
 export { FoodInRecipe } from "./FoodInRecipe";
+export { FoodNutrition } from "./FoodNutrition";
 export { Meal } from "./Meal";
 export { Profile } from "./Profile";
 export { Recipe } from "./Recipe";
+export { RecipeInMeal } from "./RecipeInMeal";
 export { Unit } from "./Unit";
 export { User } from "./User";
 export { WeighIn } from "./WeighIn";

@@ -20,7 +20,7 @@ export class GroupByUnitArgs {
   @TypeGraphQL.Field(_type => [UnitScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "name" | "abbreviation">;
+  by!: Array<"id" | "name" | "shortname" | "volume">;
 
   @TypeGraphQL.Field(_type => UnitScalarWhereWithAggregatesInput, {
     nullable: true

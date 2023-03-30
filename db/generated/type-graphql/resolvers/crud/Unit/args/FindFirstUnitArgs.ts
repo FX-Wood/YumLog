@@ -35,5 +35,5 @@ export class FindFirstUnitArgs {
   @TypeGraphQL.Field(_type => [UnitScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "name" | "abbreviation"> | undefined;
+  distinct?: Array<"id" | "name" | "shortname" | "volume"> | undefined;
 }

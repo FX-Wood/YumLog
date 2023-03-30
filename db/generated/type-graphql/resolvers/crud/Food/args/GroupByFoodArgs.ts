@@ -20,7 +20,7 @@ export class GroupByFoodArgs {
   @TypeGraphQL.Field(_type => [FoodScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "name" | "brand" | "calories" | "protein" | "fat" | "carbs">;
+  by!: Array<"id" | "name" | "brand">;
 
   @TypeGraphQL.Field(_type => FoodScalarWhereWithAggregatesInput, {
     nullable: true

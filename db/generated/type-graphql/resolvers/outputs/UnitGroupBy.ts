@@ -25,7 +25,12 @@ export class UnitGroupBy {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  abbreviation!: string;
+  shortname!: string;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  volume!: boolean;
 
   @TypeGraphQL.Field(_type => UnitCountAggregate, {
     nullable: true

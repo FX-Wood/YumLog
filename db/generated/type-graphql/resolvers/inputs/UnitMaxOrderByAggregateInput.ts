@@ -21,5 +21,10 @@ export class UnitMaxOrderByAggregateInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  abbreviation?: "asc" | "desc" | undefined;
+  shortname?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  volume?: "asc" | "desc" | undefined;
 }

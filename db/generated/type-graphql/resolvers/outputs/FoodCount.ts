@@ -10,6 +10,11 @@ export class FoodCount {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
+  nutrition!: number;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: false
+  })
   meals!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {

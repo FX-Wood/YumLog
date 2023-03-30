@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { RecipeInMealCreateNestedManyWithoutMealInput } from "../inputs/RecipeInMealCreateNestedManyWithoutMealInput";
 import { UserCreateNestedOneWithoutMealsInput } from "../inputs/UserCreateNestedOneWithoutMealsInput";
 import { MealType } from "../../enums/MealType";
 
@@ -18,4 +19,9 @@ export class MealCreateWithoutFoodsInput {
     nullable: false
   })
   mealType!: "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK";
+
+  @TypeGraphQL.Field(_type => RecipeInMealCreateNestedManyWithoutMealInput, {
+    nullable: true
+  })
+  recipes?: RecipeInMealCreateNestedManyWithoutMealInput | undefined;
 }

@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { FoodInMeal } from "../models/FoodInMeal";
+import { RecipeInMeal } from "../models/RecipeInMeal";
 import { User } from "../models/User";
 import { MealType } from "../enums/MealType";
 import { MealCount } from "../resolvers/outputs/MealCount";
@@ -29,6 +30,8 @@ export class Meal {
   mealType!: "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK";
 
   foods?: FoodInMeal[];
+
+  recipes?: RecipeInMeal[];
 
   @TypeGraphQL.Field(_type => MealCount, {
     nullable: true

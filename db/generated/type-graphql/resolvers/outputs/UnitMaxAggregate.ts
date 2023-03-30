@@ -20,5 +20,10 @@ export class UnitMaxAggregate {
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  abbreviation!: string | null;
+  shortname!: string | null;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  volume!: boolean | null;
 }

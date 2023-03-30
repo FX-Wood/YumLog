@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { FoodInMeal } from "../models/FoodInMeal";
 import { FoodInRecipe } from "../models/FoodInRecipe";
+import { FoodNutrition } from "../models/FoodNutrition";
 import { FoodCount } from "../resolvers/outputs/FoodCount";
 
 @TypeGraphQL.ObjectType("Food", {
@@ -25,25 +26,7 @@ export class Food {
   })
   brand!: string;
 
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
-  })
-  calories!: number;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  protein!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  fat!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  carbs!: Prisma.Decimal;
+  nutrition?: FoodNutrition[];
 
   meals?: FoodInMeal[];
 

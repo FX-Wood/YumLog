@@ -58,6 +58,7 @@ model Recipe {
   userId    Int 
   name      String
   foods     FoodInRecipe[]
+  meals     RecipeInMeal[]
 }
 
 model Meal {
@@ -66,6 +67,7 @@ model Meal {
   userId    Int
   mealType  MealType
   foods     FoodInMeal[]
+  recipes   RecipeInMeal[]
 }
 
 enum MealType {
@@ -75,19 +77,42 @@ enum MealType {
   SNACK
 }
 
+model RecipeInMeal {
+  id        Int   @id @default(autoincrement())
+  recipe    Recipe  @relation(fields: [recipeId], references: [id])
+  recipeId  Int
+  meal      Meal  @relation(fields: [mealId], references: [id])
+  mealId    Int
+  quantity  Decimal
+  unit      Unit   @relation(fields: [unitId], references: [id])
+  unitId    Int
+}
+
 model Food {
   id        Int       @id @default(autoincrement())
   name      String
   brand     String
-  calories  Int
-  protein   Decimal
-  fat       Decimal
-  carbs     Decimal
+  // need to allow for different quantities
+  nutrition FoodNutrition[]
   meals     FoodInMeal[]
   recipes   FoodInRecipe[]
   
   @@unique([name, brand])
 }
+
+model FoodNutrition {
+  id        Int   @id @default(autoincrement())
+  food      Food  @relation(fields: [foodId], references: [id])
+  foodId    Int
+  quantity  Decimal
+  unit      Unit   @relation(fields: [unitId], references: [id])
+  unitId    Int
+  calories  Int
+  protein   Decimal
+  fat       Decimal
+  carbs     Decimal
+}
+
 
 model FoodInRecipe {
   id        Int   @id @default(autoincrement())
@@ -114,9 +139,12 @@ model FoodInMeal {
 model Unit {
   id            Int     @id @default(autoincrement())
   name          String
-  abbreviation  String
+  shortname     String
+  volume        Boolean
   // conversion factor
   mealFoods     FoodInMeal[]
+  mealRecipe    RecipeInMeal[]
   recipeFoods   FoodInRecipe[]
+  foodNutrition FoodNutrition[]
 }
 

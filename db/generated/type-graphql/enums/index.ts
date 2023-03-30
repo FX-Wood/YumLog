@@ -1,10 +1,12 @@
 export { FoodInMealScalarFieldEnum } from "./FoodInMealScalarFieldEnum";
 export { FoodInRecipeScalarFieldEnum } from "./FoodInRecipeScalarFieldEnum";
+export { FoodNutritionScalarFieldEnum } from "./FoodNutritionScalarFieldEnum";
 export { FoodScalarFieldEnum } from "./FoodScalarFieldEnum";
 export { MealScalarFieldEnum } from "./MealScalarFieldEnum";
 export { MealType } from "./MealType";
 export { ProfileScalarFieldEnum } from "./ProfileScalarFieldEnum";
 export { QueryMode } from "./QueryMode";
+export { RecipeInMealScalarFieldEnum } from "./RecipeInMealScalarFieldEnum";
 export { RecipeScalarFieldEnum } from "./RecipeScalarFieldEnum";
 export { SortOrder } from "./SortOrder";
 export { TransactionIsolationLevel } from "./TransactionIsolationLevel";

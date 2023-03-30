@@ -21,24 +21,4 @@ export class FoodCreateManyInput {
     nullable: false
   })
   brand!: string;
-
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
-  })
-  calories!: number;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  protein!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  fat!: Prisma.Decimal;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  carbs!: Prisma.Decimal;
 }

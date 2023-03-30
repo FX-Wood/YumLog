@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { FoodInRecipeOrderByRelationAggregateInput } from "../inputs/FoodInRecipeOrderByRelationAggregateInput";
+import { RecipeInMealOrderByRelationAggregateInput } from "../inputs/RecipeInMealOrderByRelationAggregateInput";
 import { UserOrderByWithRelationInput } from "../inputs/UserOrderByWithRelationInput";
 import { SortOrder } from "../../enums/SortOrder";
 
@@ -34,4 +35,9 @@ export class RecipeOrderByWithRelationInput {
     nullable: true
   })
   foods?: FoodInRecipeOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => RecipeInMealOrderByRelationAggregateInput, {
+    nullable: true
+  })
+  meals?: RecipeInMealOrderByRelationAggregateInput | undefined;
 }

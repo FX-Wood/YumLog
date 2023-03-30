@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { FoodInRecipeListRelationFilter } from "../inputs/FoodInRecipeListRelationFilter";
 import { IntFilter } from "../inputs/IntFilter";
+import { RecipeInMealListRelationFilter } from "../inputs/RecipeInMealListRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
@@ -50,4 +51,9 @@ export class RecipeWhereInput {
     nullable: true
   })
   foods?: FoodInRecipeListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => RecipeInMealListRelationFilter, {
+    nullable: true
+  })
+  meals?: RecipeInMealListRelationFilter | undefined;
 }

@@ -20,5 +20,10 @@ export class UnitCreateManyInput {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  abbreviation!: string;
+  shortname!: string;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  volume!: boolean;
 }

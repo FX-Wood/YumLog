@@ -35,5 +35,5 @@ export class FindManyFoodArgs {
   @TypeGraphQL.Field(_type => [FoodScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "name" | "brand" | "calories" | "protein" | "fat" | "carbs"> | undefined;
+  distinct?: Array<"id" | "name" | "brand"> | undefined;
 }

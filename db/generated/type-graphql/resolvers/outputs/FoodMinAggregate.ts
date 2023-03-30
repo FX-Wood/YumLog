@@ -21,24 +21,4 @@ export class FoodMinAggregate {
     nullable: true
   })
   brand!: string | null;
-
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
-  })
-  calories!: number | null;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: true
-  })
-  protein!: Prisma.Decimal | null;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: true
-  })
-  fat!: Prisma.Decimal | null;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: true
-  })
-  carbs!: Prisma.Decimal | null;
 }

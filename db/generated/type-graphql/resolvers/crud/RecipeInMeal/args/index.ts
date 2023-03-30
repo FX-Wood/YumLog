@@ -1,0 +1,12 @@
+export { AggregateRecipeInMealArgs } from "./AggregateRecipeInMealArgs";
+export { CreateManyRecipeInMealArgs } from "./CreateManyRecipeInMealArgs";
+export { CreateOneRecipeInMealArgs } from "./CreateOneRecipeInMealArgs";
+export { DeleteManyRecipeInMealArgs } from "./DeleteManyRecipeInMealArgs";
+export { DeleteOneRecipeInMealArgs } from "./DeleteOneRecipeInMealArgs";
+export { FindFirstRecipeInMealArgs } from "./FindFirstRecipeInMealArgs";
+export { FindManyRecipeInMealArgs } from "./FindManyRecipeInMealArgs";
+export { FindUniqueRecipeInMealArgs } from "./FindUniqueRecipeInMealArgs";
+export { GroupByRecipeInMealArgs } from "./GroupByRecipeInMealArgs";
+export { UpdateManyRecipeInMealArgs } from "./UpdateManyRecipeInMealArgs";
+export { UpdateOneRecipeInMealArgs } from "./UpdateOneRecipeInMealArgs";
+export { UpsertOneRecipeInMealArgs } from "./UpsertOneRecipeInMealArgs";

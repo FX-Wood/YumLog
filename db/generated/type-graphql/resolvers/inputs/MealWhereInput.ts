@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { EnumMealTypeFilter } from "../inputs/EnumMealTypeFilter";
 import { FoodInMealListRelationFilter } from "../inputs/FoodInMealListRelationFilter";
 import { IntFilter } from "../inputs/IntFilter";
+import { RecipeInMealListRelationFilter } from "../inputs/RecipeInMealListRelationFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("MealWhereInput", {
@@ -50,4 +51,9 @@ export class MealWhereInput {
     nullable: true
   })
   foods?: FoodInMealListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => RecipeInMealListRelationFilter, {
+    nullable: true
+  })
+  recipes?: RecipeInMealListRelationFilter | undefined;
 }

@@ -11,4 +11,9 @@ export class RecipeCount {
     nullable: false
   })
   foods!: number;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: false
+  })
+  meals!: number;
 }

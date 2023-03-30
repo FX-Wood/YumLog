@@ -4,6 +4,8 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { FoodInMeal } from "../models/FoodInMeal";
 import { FoodInRecipe } from "../models/FoodInRecipe";
+import { FoodNutrition } from "../models/FoodNutrition";
+import { RecipeInMeal } from "../models/RecipeInMeal";
 import { UnitCount } from "../resolvers/outputs/UnitCount";
 
 @TypeGraphQL.ObjectType("Unit", {
@@ -23,11 +25,20 @@ export class Unit {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  abbreviation!: string;
+  shortname!: string;
+
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  volume!: boolean;
 
   mealFoods?: FoodInMeal[];
 
+  mealRecipe?: RecipeInMeal[];
+
   recipeFoods?: FoodInRecipe[];
+
+  foodNutrition?: FoodNutrition[];
 
   @TypeGraphQL.Field(_type => UnitCount, {
     nullable: true
