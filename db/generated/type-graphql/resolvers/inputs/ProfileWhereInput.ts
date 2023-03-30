@@ -32,11 +32,6 @@ export class ProfileWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  user?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
@@ -66,4 +61,9 @@ export class ProfileWhereInput {
     nullable: true
   })
   metric?: BoolFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
+    nullable: true
+  })
+  user?: UserRelationFilter | undefined;
 }

@@ -16,20 +16,10 @@ export class FoodInRecipeOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => FoodOrderByWithRelationInput, {
-    nullable: true
-  })
-  food?: FoodOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   foodId?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => RecipeOrderByWithRelationInput, {
-    nullable: true
-  })
-  recipe?: RecipeOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
@@ -41,13 +31,23 @@ export class FoodInRecipeOrderByWithRelationInput {
   })
   quantity?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UnitOrderByWithRelationInput, {
-    nullable: true
-  })
-  unit?: UnitOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
   unitId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => FoodOrderByWithRelationInput, {
+    nullable: true
+  })
+  food?: FoodOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => RecipeOrderByWithRelationInput, {
+    nullable: true
+  })
+  recipe?: RecipeOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => UnitOrderByWithRelationInput, {
+    nullable: true
+  })
+  unit?: UnitOrderByWithRelationInput | undefined;
 }

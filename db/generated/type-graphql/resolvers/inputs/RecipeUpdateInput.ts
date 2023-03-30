@@ -11,15 +11,15 @@ import { UserUpdateOneRequiredWithoutRecipesNestedInput } from "../inputs/UserUp
   isAbstract: true
 })
 export class RecipeUpdateInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutRecipesNestedInput, {
-    nullable: true
-  })
-  user?: UserUpdateOneRequiredWithoutRecipesNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
   name?: StringFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutRecipesNestedInput, {
+    nullable: true
+  })
+  user?: UserUpdateOneRequiredWithoutRecipesNestedInput | undefined;
 
   @TypeGraphQL.Field(_type => FoodInRecipeUpdateManyWithoutRecipeNestedInput, {
     nullable: true

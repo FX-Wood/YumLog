@@ -45,6 +45,16 @@ export class UserWhereInput {
   })
   password?: StringFilter | undefined;
 
+  @TypeGraphQL.Field(_type => DateTimeFilter, {
+    nullable: true
+  })
+  createdAt?: DateTimeFilter | undefined;
+
+  @TypeGraphQL.Field(_type => DateTimeFilter, {
+    nullable: true
+  })
+  updatedAt?: DateTimeFilter | undefined;
+
   @TypeGraphQL.Field(_type => ProfileRelationFilter, {
     nullable: true
   })
@@ -69,14 +79,4 @@ export class UserWhereInput {
     nullable: true
   })
   recipes?: RecipeListRelationFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeFilter, {
-    nullable: true
-  })
-  createdAt?: DateTimeFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeFilter, {
-    nullable: true
-  })
-  updatedAt?: DateTimeFilter | undefined;
 }

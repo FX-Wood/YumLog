@@ -8,11 +8,6 @@ import { UserCreateNestedOneWithoutWorkoutsInput } from "../inputs/UserCreateNes
   isAbstract: true
 })
 export class WorkoutCreateInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutWorkoutsInput, {
-    nullable: false
-  })
-  user!: UserCreateNestedOneWithoutWorkoutsInput;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -22,4 +17,9 @@ export class WorkoutCreateInput {
     nullable: false
   })
   calories!: number;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutWorkoutsInput, {
+    nullable: false
+  })
+  user!: UserCreateNestedOneWithoutWorkoutsInput;
 }

@@ -16,11 +16,6 @@ export class MealOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
-    nullable: true
-  })
-  user?: UserOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -30,6 +25,11 @@ export class MealOrderByWithRelationInput {
     nullable: true
   })
   mealType?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
+    nullable: true
+  })
+  user?: UserOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => FoodInMealOrderByRelationAggregateInput, {
     nullable: true

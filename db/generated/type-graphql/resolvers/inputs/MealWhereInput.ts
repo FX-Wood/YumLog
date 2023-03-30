@@ -32,11 +32,6 @@ export class MealWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  user?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
@@ -46,6 +41,11 @@ export class MealWhereInput {
     nullable: true
   })
   mealType?: EnumMealTypeFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
+    nullable: true
+  })
+  user?: UserRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => FoodInMealListRelationFilter, {
     nullable: true

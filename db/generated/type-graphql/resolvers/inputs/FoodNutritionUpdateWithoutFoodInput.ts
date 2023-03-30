@@ -15,11 +15,6 @@ export class FoodNutritionUpdateWithoutFoodInput {
   })
   quantity?: DecimalFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => UnitUpdateOneRequiredWithoutFoodNutritionNestedInput, {
-    nullable: true
-  })
-  unit?: UnitUpdateOneRequiredWithoutFoodNutritionNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -39,4 +34,9 @@ export class FoodNutritionUpdateWithoutFoodInput {
     nullable: true
   })
   carbs?: DecimalFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UnitUpdateOneRequiredWithoutFoodNutritionNestedInput, {
+    nullable: true
+  })
+  unit?: UnitUpdateOneRequiredWithoutFoodNutritionNestedInput | undefined;
 }

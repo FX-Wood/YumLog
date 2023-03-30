@@ -31,11 +31,6 @@ export class FoodNutritionWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => FoodRelationFilter, {
-    nullable: true
-  })
-  food?: FoodRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
@@ -45,11 +40,6 @@ export class FoodNutritionWhereInput {
     nullable: true
   })
   quantity?: DecimalFilter | undefined;
-
-  @TypeGraphQL.Field(_type => UnitRelationFilter, {
-    nullable: true
-  })
-  unit?: UnitRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
@@ -75,4 +65,14 @@ export class FoodNutritionWhereInput {
     nullable: true
   })
   carbs?: DecimalFilter | undefined;
+
+  @TypeGraphQL.Field(_type => FoodRelationFilter, {
+    nullable: true
+  })
+  food?: FoodRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UnitRelationFilter, {
+    nullable: true
+  })
+  unit?: UnitRelationFilter | undefined;
 }

@@ -1,10 +1,9 @@
 import * as TypeGraphQL from "type-graphql";
-import graphqlFields from "graphql-fields";
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { GroupByWorkoutArgs } from "./args/GroupByWorkoutArgs";
 import { Workout } from "../../../models/Workout";
 import { WorkoutGroupBy } from "../../outputs/WorkoutGroupBy";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => Workout)
 export class GroupByWorkoutResolver {
@@ -12,9 +11,7 @@ export class GroupByWorkoutResolver {
     nullable: false
   })
   async groupByWorkout(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: GroupByWorkoutArgs): Promise<WorkoutGroupBy[]> {
-    const { _count, _avg, _sum, _min, _max } = transformFields(
-      graphqlFields(info as any)
-    );
+    const { _count, _avg, _sum, _min, _max } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).workout.groupBy({
       ...args,
       ...Object.fromEntries(

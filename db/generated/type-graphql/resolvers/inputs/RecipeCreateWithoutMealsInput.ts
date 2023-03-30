@@ -9,15 +9,15 @@ import { UserCreateNestedOneWithoutRecipesInput } from "../inputs/UserCreateNest
   isAbstract: true
 })
 export class RecipeCreateWithoutMealsInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutRecipesInput, {
-    nullable: false
-  })
-  user!: UserCreateNestedOneWithoutRecipesInput;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   name!: string;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutRecipesInput, {
+    nullable: false
+  })
+  user!: UserCreateNestedOneWithoutRecipesInput;
 
   @TypeGraphQL.Field(_type => FoodInRecipeCreateNestedManyWithoutRecipeInput, {
     nullable: true

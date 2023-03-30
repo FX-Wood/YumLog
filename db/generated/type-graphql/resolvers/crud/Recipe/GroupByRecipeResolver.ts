@@ -1,10 +1,9 @@
 import * as TypeGraphQL from "type-graphql";
-import graphqlFields from "graphql-fields";
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { GroupByRecipeArgs } from "./args/GroupByRecipeArgs";
 import { Recipe } from "../../../models/Recipe";
 import { RecipeGroupBy } from "../../outputs/RecipeGroupBy";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => Recipe)
 export class GroupByRecipeResolver {
@@ -12,9 +11,7 @@ export class GroupByRecipeResolver {
     nullable: false
   })
   async groupByRecipe(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: GroupByRecipeArgs): Promise<RecipeGroupBy[]> {
-    const { _count, _avg, _sum, _min, _max } = transformFields(
-      graphqlFields(info as any)
-    );
+    const { _count, _avg, _sum, _min, _max } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).recipe.groupBy({
       ...args,
       ...Object.fromEntries(

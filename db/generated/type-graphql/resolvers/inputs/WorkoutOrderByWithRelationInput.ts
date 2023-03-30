@@ -14,11 +14,6 @@ export class WorkoutOrderByWithRelationInput {
   })
   id?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
-    nullable: true
-  })
-  user?: UserOrderByWithRelationInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -33,4 +28,9 @@ export class WorkoutOrderByWithRelationInput {
     nullable: true
   })
   calories?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
+    nullable: true
+  })
+  user?: UserOrderByWithRelationInput | undefined;
 }

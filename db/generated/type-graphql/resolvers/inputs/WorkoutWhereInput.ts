@@ -30,11 +30,6 @@ export class WorkoutWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UserRelationFilter, {
-    nullable: true
-  })
-  user?: UserRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
@@ -49,4 +44,9 @@ export class WorkoutWhereInput {
     nullable: true
   })
   calories?: IntFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UserRelationFilter, {
+    nullable: true
+  })
+  user?: UserRelationFilter | undefined;
 }

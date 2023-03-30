@@ -8,11 +8,6 @@ import { UserCreateNestedOneWithoutProfileInput } from "../inputs/UserCreateNest
   isAbstract: true
 })
 export class ProfileCreateInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutProfileInput, {
-    nullable: false
-  })
-  user!: UserCreateNestedOneWithoutProfileInput;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -37,4 +32,9 @@ export class ProfileCreateInput {
     nullable: false
   })
   metric!: boolean;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutProfileInput, {
+    nullable: false
+  })
+  user!: UserCreateNestedOneWithoutProfileInput;
 }

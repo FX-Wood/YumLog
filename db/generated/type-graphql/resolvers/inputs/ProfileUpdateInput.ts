@@ -12,11 +12,6 @@ import { UserUpdateOneRequiredWithoutProfileNestedInput } from "../inputs/UserUp
   isAbstract: true
 })
 export class ProfileUpdateInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutProfileNestedInput, {
-    nullable: true
-  })
-  user?: UserUpdateOneRequiredWithoutProfileNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -41,4 +36,9 @@ export class ProfileUpdateInput {
     nullable: true
   })
   metric?: BoolFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutProfileNestedInput, {
+    nullable: true
+  })
+  user?: UserUpdateOneRequiredWithoutProfileNestedInput | undefined;
 }

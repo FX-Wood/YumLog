@@ -1,9 +1,8 @@
 import * as TypeGraphQL from "type-graphql";
-import graphqlFields from "graphql-fields";
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { UpsertOneProfileArgs } from "./args/UpsertOneProfileArgs";
 import { Profile } from "../../../models/Profile";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => Profile)
 export class UpsertOneProfileResolver {
@@ -11,9 +10,7 @@ export class UpsertOneProfileResolver {
     nullable: false
   })
   async upsertOneProfile(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpsertOneProfileArgs): Promise<Profile> {
-    const { _count } = transformFields(
-      graphqlFields(info as any)
-    );
+    const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).profile.upsert({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),

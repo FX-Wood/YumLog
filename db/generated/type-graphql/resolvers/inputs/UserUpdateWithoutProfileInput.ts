@@ -23,6 +23,16 @@ export class UserUpdateWithoutProfileInput {
   })
   password?: StringFieldUpdateOperationsInput | undefined;
 
+  @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  createdAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
   @TypeGraphQL.Field(_type => MealUpdateManyWithoutUserNestedInput, {
     nullable: true
   })
@@ -42,14 +52,4 @@ export class UserUpdateWithoutProfileInput {
     nullable: true
   })
   recipes?: RecipeUpdateManyWithoutUserNestedInput | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  createdAt?: DateTimeFieldUpdateOperationsInput | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
 }

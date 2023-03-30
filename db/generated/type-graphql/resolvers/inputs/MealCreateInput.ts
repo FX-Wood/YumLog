@@ -11,15 +11,15 @@ import { MealType } from "../../enums/MealType";
   isAbstract: true
 })
 export class MealCreateInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutMealsInput, {
-    nullable: false
-  })
-  user!: UserCreateNestedOneWithoutMealsInput;
-
   @TypeGraphQL.Field(_type => MealType, {
     nullable: false
   })
   mealType!: "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK";
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutMealsInput, {
+    nullable: false
+  })
+  user!: UserCreateNestedOneWithoutMealsInput;
 
   @TypeGraphQL.Field(_type => FoodInMealCreateNestedManyWithoutMealInput, {
     nullable: true

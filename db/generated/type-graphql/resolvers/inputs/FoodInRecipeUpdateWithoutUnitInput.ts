@@ -10,6 +10,11 @@ import { RecipeUpdateOneRequiredWithoutFoodsNestedInput } from "../inputs/Recipe
   isAbstract: true
 })
 export class FoodInRecipeUpdateWithoutUnitInput {
+  @TypeGraphQL.Field(_type => DecimalFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  quantity?: DecimalFieldUpdateOperationsInput | undefined;
+
   @TypeGraphQL.Field(_type => FoodUpdateOneRequiredWithoutRecipesNestedInput, {
     nullable: true
   })
@@ -19,9 +24,4 @@ export class FoodInRecipeUpdateWithoutUnitInput {
     nullable: true
   })
   recipe?: RecipeUpdateOneRequiredWithoutFoodsNestedInput | undefined;
-
-  @TypeGraphQL.Field(_type => DecimalFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  quantity?: DecimalFieldUpdateOperationsInput | undefined;
 }

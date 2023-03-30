@@ -1,18 +1,22 @@
 import * as TypeGraphQL from "type-graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { User } from "../../../models/User";
 import { Workout } from "../../../models/Workout";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => Workout)
 export class WorkoutRelationsResolver {
   @TypeGraphQL.FieldResolver(_type => User, {
     nullable: false
   })
-  async user(@TypeGraphQL.Root() workout: Workout, @TypeGraphQL.Ctx() ctx: any): Promise<User> {
-    return getPrismaFromContext(ctx).workout.findUnique({
+  async user(@TypeGraphQL.Root() workout: Workout, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<User> {
+    const { _count } = transformInfoIntoPrismaArgs(info);
+    return getPrismaFromContext(ctx).workout.findUniqueOrThrow({
       where: {
         id: workout.id,
       },
-    }).user({});
+    }).user({
+      ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
+    });
   }
 }

@@ -10,11 +10,6 @@ import { UserUpdateOneRequiredWithoutWeighInsNestedInput } from "../inputs/UserU
   isAbstract: true
 })
 export class WeighInUpdateInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutWeighInsNestedInput, {
-    nullable: true
-  })
-  user?: UserUpdateOneRequiredWithoutWeighInsNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => DecimalFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -24,4 +19,9 @@ export class WeighInUpdateInput {
     nullable: true
   })
   createdAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutWeighInsNestedInput, {
+    nullable: true
+  })
+  user?: UserUpdateOneRequiredWithoutWeighInsNestedInput | undefined;
 }

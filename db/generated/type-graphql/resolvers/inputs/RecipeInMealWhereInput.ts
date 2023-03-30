@@ -32,20 +32,10 @@ export class RecipeInMealWhereInput {
   })
   id?: IntFilter | undefined;
 
-  @TypeGraphQL.Field(_type => RecipeRelationFilter, {
-    nullable: true
-  })
-  recipe?: RecipeRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
   recipeId?: IntFilter | undefined;
-
-  @TypeGraphQL.Field(_type => MealRelationFilter, {
-    nullable: true
-  })
-  meal?: MealRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
@@ -57,13 +47,23 @@ export class RecipeInMealWhereInput {
   })
   quantity?: DecimalFilter | undefined;
 
-  @TypeGraphQL.Field(_type => UnitRelationFilter, {
-    nullable: true
-  })
-  unit?: UnitRelationFilter | undefined;
-
   @TypeGraphQL.Field(_type => IntFilter, {
     nullable: true
   })
   unitId?: IntFilter | undefined;
+
+  @TypeGraphQL.Field(_type => RecipeRelationFilter, {
+    nullable: true
+  })
+  recipe?: RecipeRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => MealRelationFilter, {
+    nullable: true
+  })
+  meal?: MealRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => UnitRelationFilter, {
+    nullable: true
+  })
+  unit?: UnitRelationFilter | undefined;
 }

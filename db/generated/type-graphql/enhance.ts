@@ -8,6 +8,8 @@ import * as models from "./models";
 import * as outputTypes from "./resolvers/outputs";
 import * as inputTypes from "./resolvers/inputs";
 
+export type MethodDecoratorOverrideFn = (decorators: MethodDecorator[]) => MethodDecorator[];
+
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver,
   Profile: crudResolvers.ProfileCrudResolver,
@@ -30,8 +32,10 @@ const actionResolversMap = {
     deleteManyUser: actionResolvers.DeleteManyUserResolver,
     deleteOneUser: actionResolvers.DeleteOneUserResolver,
     findFirstUser: actionResolvers.FindFirstUserResolver,
+    findFirstUserOrThrow: actionResolvers.FindFirstUserOrThrowResolver,
     users: actionResolvers.FindManyUserResolver,
     user: actionResolvers.FindUniqueUserResolver,
+    getUser: actionResolvers.FindUniqueUserOrThrowResolver,
     groupByUser: actionResolvers.GroupByUserResolver,
     updateManyUser: actionResolvers.UpdateManyUserResolver,
     updateOneUser: actionResolvers.UpdateOneUserResolver,
@@ -44,8 +48,10 @@ const actionResolversMap = {
     deleteManyProfile: actionResolvers.DeleteManyProfileResolver,
     deleteOneProfile: actionResolvers.DeleteOneProfileResolver,
     findFirstProfile: actionResolvers.FindFirstProfileResolver,
+    findFirstProfileOrThrow: actionResolvers.FindFirstProfileOrThrowResolver,
     profiles: actionResolvers.FindManyProfileResolver,
     profile: actionResolvers.FindUniqueProfileResolver,
+    getProfile: actionResolvers.FindUniqueProfileOrThrowResolver,
     groupByProfile: actionResolvers.GroupByProfileResolver,
     updateManyProfile: actionResolvers.UpdateManyProfileResolver,
     updateOneProfile: actionResolvers.UpdateOneProfileResolver,
@@ -58,8 +64,10 @@ const actionResolversMap = {
     deleteManyWeighIn: actionResolvers.DeleteManyWeighInResolver,
     deleteOneWeighIn: actionResolvers.DeleteOneWeighInResolver,
     findFirstWeighIn: actionResolvers.FindFirstWeighInResolver,
+    findFirstWeighInOrThrow: actionResolvers.FindFirstWeighInOrThrowResolver,
     weighIns: actionResolvers.FindManyWeighInResolver,
     weighIn: actionResolvers.FindUniqueWeighInResolver,
+    getWeighIn: actionResolvers.FindUniqueWeighInOrThrowResolver,
     groupByWeighIn: actionResolvers.GroupByWeighInResolver,
     updateManyWeighIn: actionResolvers.UpdateManyWeighInResolver,
     updateOneWeighIn: actionResolvers.UpdateOneWeighInResolver,
@@ -72,8 +80,10 @@ const actionResolversMap = {
     deleteManyWorkout: actionResolvers.DeleteManyWorkoutResolver,
     deleteOneWorkout: actionResolvers.DeleteOneWorkoutResolver,
     findFirstWorkout: actionResolvers.FindFirstWorkoutResolver,
+    findFirstWorkoutOrThrow: actionResolvers.FindFirstWorkoutOrThrowResolver,
     workouts: actionResolvers.FindManyWorkoutResolver,
     workout: actionResolvers.FindUniqueWorkoutResolver,
+    getWorkout: actionResolvers.FindUniqueWorkoutOrThrowResolver,
     groupByWorkout: actionResolvers.GroupByWorkoutResolver,
     updateManyWorkout: actionResolvers.UpdateManyWorkoutResolver,
     updateOneWorkout: actionResolvers.UpdateOneWorkoutResolver,
@@ -86,8 +96,10 @@ const actionResolversMap = {
     deleteManyRecipe: actionResolvers.DeleteManyRecipeResolver,
     deleteOneRecipe: actionResolvers.DeleteOneRecipeResolver,
     findFirstRecipe: actionResolvers.FindFirstRecipeResolver,
+    findFirstRecipeOrThrow: actionResolvers.FindFirstRecipeOrThrowResolver,
     recipes: actionResolvers.FindManyRecipeResolver,
     recipe: actionResolvers.FindUniqueRecipeResolver,
+    getRecipe: actionResolvers.FindUniqueRecipeOrThrowResolver,
     groupByRecipe: actionResolvers.GroupByRecipeResolver,
     updateManyRecipe: actionResolvers.UpdateManyRecipeResolver,
     updateOneRecipe: actionResolvers.UpdateOneRecipeResolver,
@@ -100,8 +112,10 @@ const actionResolversMap = {
     deleteManyMeal: actionResolvers.DeleteManyMealResolver,
     deleteOneMeal: actionResolvers.DeleteOneMealResolver,
     findFirstMeal: actionResolvers.FindFirstMealResolver,
+    findFirstMealOrThrow: actionResolvers.FindFirstMealOrThrowResolver,
     meals: actionResolvers.FindManyMealResolver,
     meal: actionResolvers.FindUniqueMealResolver,
+    getMeal: actionResolvers.FindUniqueMealOrThrowResolver,
     groupByMeal: actionResolvers.GroupByMealResolver,
     updateManyMeal: actionResolvers.UpdateManyMealResolver,
     updateOneMeal: actionResolvers.UpdateOneMealResolver,
@@ -114,8 +128,10 @@ const actionResolversMap = {
     deleteManyRecipeInMeal: actionResolvers.DeleteManyRecipeInMealResolver,
     deleteOneRecipeInMeal: actionResolvers.DeleteOneRecipeInMealResolver,
     findFirstRecipeInMeal: actionResolvers.FindFirstRecipeInMealResolver,
+    findFirstRecipeInMealOrThrow: actionResolvers.FindFirstRecipeInMealOrThrowResolver,
     recipeInMeals: actionResolvers.FindManyRecipeInMealResolver,
     recipeInMeal: actionResolvers.FindUniqueRecipeInMealResolver,
+    getRecipeInMeal: actionResolvers.FindUniqueRecipeInMealOrThrowResolver,
     groupByRecipeInMeal: actionResolvers.GroupByRecipeInMealResolver,
     updateManyRecipeInMeal: actionResolvers.UpdateManyRecipeInMealResolver,
     updateOneRecipeInMeal: actionResolvers.UpdateOneRecipeInMealResolver,
@@ -128,8 +144,10 @@ const actionResolversMap = {
     deleteManyFood: actionResolvers.DeleteManyFoodResolver,
     deleteOneFood: actionResolvers.DeleteOneFoodResolver,
     findFirstFood: actionResolvers.FindFirstFoodResolver,
+    findFirstFoodOrThrow: actionResolvers.FindFirstFoodOrThrowResolver,
     foods: actionResolvers.FindManyFoodResolver,
     food: actionResolvers.FindUniqueFoodResolver,
+    getFood: actionResolvers.FindUniqueFoodOrThrowResolver,
     groupByFood: actionResolvers.GroupByFoodResolver,
     updateManyFood: actionResolvers.UpdateManyFoodResolver,
     updateOneFood: actionResolvers.UpdateOneFoodResolver,
@@ -142,8 +160,10 @@ const actionResolversMap = {
     deleteManyFoodNutrition: actionResolvers.DeleteManyFoodNutritionResolver,
     deleteOneFoodNutrition: actionResolvers.DeleteOneFoodNutritionResolver,
     findFirstFoodNutrition: actionResolvers.FindFirstFoodNutritionResolver,
+    findFirstFoodNutritionOrThrow: actionResolvers.FindFirstFoodNutritionOrThrowResolver,
     foodNutritions: actionResolvers.FindManyFoodNutritionResolver,
     foodNutrition: actionResolvers.FindUniqueFoodNutritionResolver,
+    getFoodNutrition: actionResolvers.FindUniqueFoodNutritionOrThrowResolver,
     groupByFoodNutrition: actionResolvers.GroupByFoodNutritionResolver,
     updateManyFoodNutrition: actionResolvers.UpdateManyFoodNutritionResolver,
     updateOneFoodNutrition: actionResolvers.UpdateOneFoodNutritionResolver,
@@ -156,8 +176,10 @@ const actionResolversMap = {
     deleteManyFoodInRecipe: actionResolvers.DeleteManyFoodInRecipeResolver,
     deleteOneFoodInRecipe: actionResolvers.DeleteOneFoodInRecipeResolver,
     findFirstFoodInRecipe: actionResolvers.FindFirstFoodInRecipeResolver,
+    findFirstFoodInRecipeOrThrow: actionResolvers.FindFirstFoodInRecipeOrThrowResolver,
     foodInRecipes: actionResolvers.FindManyFoodInRecipeResolver,
     foodInRecipe: actionResolvers.FindUniqueFoodInRecipeResolver,
+    getFoodInRecipe: actionResolvers.FindUniqueFoodInRecipeOrThrowResolver,
     groupByFoodInRecipe: actionResolvers.GroupByFoodInRecipeResolver,
     updateManyFoodInRecipe: actionResolvers.UpdateManyFoodInRecipeResolver,
     updateOneFoodInRecipe: actionResolvers.UpdateOneFoodInRecipeResolver,
@@ -170,8 +192,10 @@ const actionResolversMap = {
     deleteManyFoodInMeal: actionResolvers.DeleteManyFoodInMealResolver,
     deleteOneFoodInMeal: actionResolvers.DeleteOneFoodInMealResolver,
     findFirstFoodInMeal: actionResolvers.FindFirstFoodInMealResolver,
+    findFirstFoodInMealOrThrow: actionResolvers.FindFirstFoodInMealOrThrowResolver,
     foodInMeals: actionResolvers.FindManyFoodInMealResolver,
     foodInMeal: actionResolvers.FindUniqueFoodInMealResolver,
+    getFoodInMeal: actionResolvers.FindUniqueFoodInMealOrThrowResolver,
     groupByFoodInMeal: actionResolvers.GroupByFoodInMealResolver,
     updateManyFoodInMeal: actionResolvers.UpdateManyFoodInMealResolver,
     updateOneFoodInMeal: actionResolvers.UpdateOneFoodInMealResolver,
@@ -184,8 +208,10 @@ const actionResolversMap = {
     deleteManyUnit: actionResolvers.DeleteManyUnitResolver,
     deleteOneUnit: actionResolvers.DeleteOneUnitResolver,
     findFirstUnit: actionResolvers.FindFirstUnitResolver,
+    findFirstUnitOrThrow: actionResolvers.FindFirstUnitOrThrowResolver,
     units: actionResolvers.FindManyUnitResolver,
     unit: actionResolvers.FindUniqueUnitResolver,
+    getUnit: actionResolvers.FindUniqueUnitOrThrowResolver,
     groupByUnit: actionResolvers.GroupByUnitResolver,
     updateManyUnit: actionResolvers.UpdateManyUnitResolver,
     updateOneUnit: actionResolvers.UpdateOneUnitResolver,
@@ -193,18 +219,18 @@ const actionResolversMap = {
   }
 };
 const crudResolversInfo = {
-  User: ["aggregateUser", "createManyUser", "createOneUser", "deleteManyUser", "deleteOneUser", "findFirstUser", "users", "user", "groupByUser", "updateManyUser", "updateOneUser", "upsertOneUser"],
-  Profile: ["aggregateProfile", "createManyProfile", "createOneProfile", "deleteManyProfile", "deleteOneProfile", "findFirstProfile", "profiles", "profile", "groupByProfile", "updateManyProfile", "updateOneProfile", "upsertOneProfile"],
-  WeighIn: ["aggregateWeighIn", "createManyWeighIn", "createOneWeighIn", "deleteManyWeighIn", "deleteOneWeighIn", "findFirstWeighIn", "weighIns", "weighIn", "groupByWeighIn", "updateManyWeighIn", "updateOneWeighIn", "upsertOneWeighIn"],
-  Workout: ["aggregateWorkout", "createManyWorkout", "createOneWorkout", "deleteManyWorkout", "deleteOneWorkout", "findFirstWorkout", "workouts", "workout", "groupByWorkout", "updateManyWorkout", "updateOneWorkout", "upsertOneWorkout"],
-  Recipe: ["aggregateRecipe", "createManyRecipe", "createOneRecipe", "deleteManyRecipe", "deleteOneRecipe", "findFirstRecipe", "recipes", "recipe", "groupByRecipe", "updateManyRecipe", "updateOneRecipe", "upsertOneRecipe"],
-  Meal: ["aggregateMeal", "createManyMeal", "createOneMeal", "deleteManyMeal", "deleteOneMeal", "findFirstMeal", "meals", "meal", "groupByMeal", "updateManyMeal", "updateOneMeal", "upsertOneMeal"],
-  RecipeInMeal: ["aggregateRecipeInMeal", "createManyRecipeInMeal", "createOneRecipeInMeal", "deleteManyRecipeInMeal", "deleteOneRecipeInMeal", "findFirstRecipeInMeal", "recipeInMeals", "recipeInMeal", "groupByRecipeInMeal", "updateManyRecipeInMeal", "updateOneRecipeInMeal", "upsertOneRecipeInMeal"],
-  Food: ["aggregateFood", "createManyFood", "createOneFood", "deleteManyFood", "deleteOneFood", "findFirstFood", "foods", "food", "groupByFood", "updateManyFood", "updateOneFood", "upsertOneFood"],
-  FoodNutrition: ["aggregateFoodNutrition", "createManyFoodNutrition", "createOneFoodNutrition", "deleteManyFoodNutrition", "deleteOneFoodNutrition", "findFirstFoodNutrition", "foodNutritions", "foodNutrition", "groupByFoodNutrition", "updateManyFoodNutrition", "updateOneFoodNutrition", "upsertOneFoodNutrition"],
-  FoodInRecipe: ["aggregateFoodInRecipe", "createManyFoodInRecipe", "createOneFoodInRecipe", "deleteManyFoodInRecipe", "deleteOneFoodInRecipe", "findFirstFoodInRecipe", "foodInRecipes", "foodInRecipe", "groupByFoodInRecipe", "updateManyFoodInRecipe", "updateOneFoodInRecipe", "upsertOneFoodInRecipe"],
-  FoodInMeal: ["aggregateFoodInMeal", "createManyFoodInMeal", "createOneFoodInMeal", "deleteManyFoodInMeal", "deleteOneFoodInMeal", "findFirstFoodInMeal", "foodInMeals", "foodInMeal", "groupByFoodInMeal", "updateManyFoodInMeal", "updateOneFoodInMeal", "upsertOneFoodInMeal"],
-  Unit: ["aggregateUnit", "createManyUnit", "createOneUnit", "deleteManyUnit", "deleteOneUnit", "findFirstUnit", "units", "unit", "groupByUnit", "updateManyUnit", "updateOneUnit", "upsertOneUnit"]
+  User: ["aggregateUser", "createManyUser", "createOneUser", "deleteManyUser", "deleteOneUser", "findFirstUser", "findFirstUserOrThrow", "users", "user", "getUser", "groupByUser", "updateManyUser", "updateOneUser", "upsertOneUser"],
+  Profile: ["aggregateProfile", "createManyProfile", "createOneProfile", "deleteManyProfile", "deleteOneProfile", "findFirstProfile", "findFirstProfileOrThrow", "profiles", "profile", "getProfile", "groupByProfile", "updateManyProfile", "updateOneProfile", "upsertOneProfile"],
+  WeighIn: ["aggregateWeighIn", "createManyWeighIn", "createOneWeighIn", "deleteManyWeighIn", "deleteOneWeighIn", "findFirstWeighIn", "findFirstWeighInOrThrow", "weighIns", "weighIn", "getWeighIn", "groupByWeighIn", "updateManyWeighIn", "updateOneWeighIn", "upsertOneWeighIn"],
+  Workout: ["aggregateWorkout", "createManyWorkout", "createOneWorkout", "deleteManyWorkout", "deleteOneWorkout", "findFirstWorkout", "findFirstWorkoutOrThrow", "workouts", "workout", "getWorkout", "groupByWorkout", "updateManyWorkout", "updateOneWorkout", "upsertOneWorkout"],
+  Recipe: ["aggregateRecipe", "createManyRecipe", "createOneRecipe", "deleteManyRecipe", "deleteOneRecipe", "findFirstRecipe", "findFirstRecipeOrThrow", "recipes", "recipe", "getRecipe", "groupByRecipe", "updateManyRecipe", "updateOneRecipe", "upsertOneRecipe"],
+  Meal: ["aggregateMeal", "createManyMeal", "createOneMeal", "deleteManyMeal", "deleteOneMeal", "findFirstMeal", "findFirstMealOrThrow", "meals", "meal", "getMeal", "groupByMeal", "updateManyMeal", "updateOneMeal", "upsertOneMeal"],
+  RecipeInMeal: ["aggregateRecipeInMeal", "createManyRecipeInMeal", "createOneRecipeInMeal", "deleteManyRecipeInMeal", "deleteOneRecipeInMeal", "findFirstRecipeInMeal", "findFirstRecipeInMealOrThrow", "recipeInMeals", "recipeInMeal", "getRecipeInMeal", "groupByRecipeInMeal", "updateManyRecipeInMeal", "updateOneRecipeInMeal", "upsertOneRecipeInMeal"],
+  Food: ["aggregateFood", "createManyFood", "createOneFood", "deleteManyFood", "deleteOneFood", "findFirstFood", "findFirstFoodOrThrow", "foods", "food", "getFood", "groupByFood", "updateManyFood", "updateOneFood", "upsertOneFood"],
+  FoodNutrition: ["aggregateFoodNutrition", "createManyFoodNutrition", "createOneFoodNutrition", "deleteManyFoodNutrition", "deleteOneFoodNutrition", "findFirstFoodNutrition", "findFirstFoodNutritionOrThrow", "foodNutritions", "foodNutrition", "getFoodNutrition", "groupByFoodNutrition", "updateManyFoodNutrition", "updateOneFoodNutrition", "upsertOneFoodNutrition"],
+  FoodInRecipe: ["aggregateFoodInRecipe", "createManyFoodInRecipe", "createOneFoodInRecipe", "deleteManyFoodInRecipe", "deleteOneFoodInRecipe", "findFirstFoodInRecipe", "findFirstFoodInRecipeOrThrow", "foodInRecipes", "foodInRecipe", "getFoodInRecipe", "groupByFoodInRecipe", "updateManyFoodInRecipe", "updateOneFoodInRecipe", "upsertOneFoodInRecipe"],
+  FoodInMeal: ["aggregateFoodInMeal", "createManyFoodInMeal", "createOneFoodInMeal", "deleteManyFoodInMeal", "deleteOneFoodInMeal", "findFirstFoodInMeal", "findFirstFoodInMealOrThrow", "foodInMeals", "foodInMeal", "getFoodInMeal", "groupByFoodInMeal", "updateManyFoodInMeal", "updateOneFoodInMeal", "upsertOneFoodInMeal"],
+  Unit: ["aggregateUnit", "createManyUnit", "createOneUnit", "deleteManyUnit", "deleteOneUnit", "findFirstUnit", "findFirstUnitOrThrow", "units", "unit", "getUnit", "groupByUnit", "updateManyUnit", "updateOneUnit", "upsertOneUnit"]
 };
 const argsInfo = {
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
@@ -213,8 +239,10 @@ const argsInfo = {
   DeleteManyUserArgs: ["where"],
   DeleteOneUserArgs: ["where"],
   FindFirstUserArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstUserOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyUserArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueUserArgs: ["where"],
+  FindUniqueUserOrThrowArgs: ["where"],
   GroupByUserArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyUserArgs: ["data", "where"],
   UpdateOneUserArgs: ["data", "where"],
@@ -225,8 +253,10 @@ const argsInfo = {
   DeleteManyProfileArgs: ["where"],
   DeleteOneProfileArgs: ["where"],
   FindFirstProfileArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstProfileOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyProfileArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueProfileArgs: ["where"],
+  FindUniqueProfileOrThrowArgs: ["where"],
   GroupByProfileArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyProfileArgs: ["data", "where"],
   UpdateOneProfileArgs: ["data", "where"],
@@ -237,8 +267,10 @@ const argsInfo = {
   DeleteManyWeighInArgs: ["where"],
   DeleteOneWeighInArgs: ["where"],
   FindFirstWeighInArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstWeighInOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyWeighInArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueWeighInArgs: ["where"],
+  FindUniqueWeighInOrThrowArgs: ["where"],
   GroupByWeighInArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyWeighInArgs: ["data", "where"],
   UpdateOneWeighInArgs: ["data", "where"],
@@ -249,8 +281,10 @@ const argsInfo = {
   DeleteManyWorkoutArgs: ["where"],
   DeleteOneWorkoutArgs: ["where"],
   FindFirstWorkoutArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstWorkoutOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyWorkoutArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueWorkoutArgs: ["where"],
+  FindUniqueWorkoutOrThrowArgs: ["where"],
   GroupByWorkoutArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyWorkoutArgs: ["data", "where"],
   UpdateOneWorkoutArgs: ["data", "where"],
@@ -261,8 +295,10 @@ const argsInfo = {
   DeleteManyRecipeArgs: ["where"],
   DeleteOneRecipeArgs: ["where"],
   FindFirstRecipeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstRecipeOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyRecipeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueRecipeArgs: ["where"],
+  FindUniqueRecipeOrThrowArgs: ["where"],
   GroupByRecipeArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyRecipeArgs: ["data", "where"],
   UpdateOneRecipeArgs: ["data", "where"],
@@ -273,8 +309,10 @@ const argsInfo = {
   DeleteManyMealArgs: ["where"],
   DeleteOneMealArgs: ["where"],
   FindFirstMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstMealOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueMealArgs: ["where"],
+  FindUniqueMealOrThrowArgs: ["where"],
   GroupByMealArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyMealArgs: ["data", "where"],
   UpdateOneMealArgs: ["data", "where"],
@@ -285,8 +323,10 @@ const argsInfo = {
   DeleteManyRecipeInMealArgs: ["where"],
   DeleteOneRecipeInMealArgs: ["where"],
   FindFirstRecipeInMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstRecipeInMealOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyRecipeInMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueRecipeInMealArgs: ["where"],
+  FindUniqueRecipeInMealOrThrowArgs: ["where"],
   GroupByRecipeInMealArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyRecipeInMealArgs: ["data", "where"],
   UpdateOneRecipeInMealArgs: ["data", "where"],
@@ -297,8 +337,10 @@ const argsInfo = {
   DeleteManyFoodArgs: ["where"],
   DeleteOneFoodArgs: ["where"],
   FindFirstFoodArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstFoodOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyFoodArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueFoodArgs: ["where"],
+  FindUniqueFoodOrThrowArgs: ["where"],
   GroupByFoodArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyFoodArgs: ["data", "where"],
   UpdateOneFoodArgs: ["data", "where"],
@@ -309,8 +351,10 @@ const argsInfo = {
   DeleteManyFoodNutritionArgs: ["where"],
   DeleteOneFoodNutritionArgs: ["where"],
   FindFirstFoodNutritionArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstFoodNutritionOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyFoodNutritionArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueFoodNutritionArgs: ["where"],
+  FindUniqueFoodNutritionOrThrowArgs: ["where"],
   GroupByFoodNutritionArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyFoodNutritionArgs: ["data", "where"],
   UpdateOneFoodNutritionArgs: ["data", "where"],
@@ -321,8 +365,10 @@ const argsInfo = {
   DeleteManyFoodInRecipeArgs: ["where"],
   DeleteOneFoodInRecipeArgs: ["where"],
   FindFirstFoodInRecipeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstFoodInRecipeOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyFoodInRecipeArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueFoodInRecipeArgs: ["where"],
+  FindUniqueFoodInRecipeOrThrowArgs: ["where"],
   GroupByFoodInRecipeArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyFoodInRecipeArgs: ["data", "where"],
   UpdateOneFoodInRecipeArgs: ["data", "where"],
@@ -333,8 +379,10 @@ const argsInfo = {
   DeleteManyFoodInMealArgs: ["where"],
   DeleteOneFoodInMealArgs: ["where"],
   FindFirstFoodInMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstFoodInMealOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyFoodInMealArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueFoodInMealArgs: ["where"],
+  FindUniqueFoodInMealOrThrowArgs: ["where"],
   GroupByFoodInMealArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyFoodInMealArgs: ["data", "where"],
   UpdateOneFoodInMealArgs: ["data", "where"],
@@ -345,8 +393,10 @@ const argsInfo = {
   DeleteManyUnitArgs: ["where"],
   DeleteOneUnitArgs: ["where"],
   FindFirstUnitArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstUnitOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindManyUnitArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
   FindUniqueUnitArgs: ["where"],
+  FindUniqueUnitOrThrowArgs: ["where"],
   GroupByUnitArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyUnitArgs: ["data", "where"],
   UpdateOneUnitArgs: ["data", "where"],
@@ -357,11 +407,12 @@ type ResolverModelNames = keyof typeof crudResolversMap;
 
 type ModelResolverActionNames<
   TModel extends ResolverModelNames
-  > = keyof typeof crudResolversMap[TModel]["prototype"];
+> = keyof typeof crudResolversMap[TModel]["prototype"];
 
 export type ResolverActionsConfig<
   TModel extends ResolverModelNames
-  > = Partial<Record<ModelResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
+> = Partial<Record<ModelResolverActionNames<TModel>, MethodDecorator[] | MethodDecoratorOverrideFn>>
+  & { _all?: MethodDecorator[] };
 
 export type ResolversEnhanceMap = {
   [TModel in ResolverModelNames]?: ResolverActionsConfig<TModel>;
@@ -375,24 +426,18 @@ export function applyResolversEnhanceMap(
     const crudTarget = crudResolversMap[modelName].prototype;
     const resolverActionsConfig = resolversEnhanceMap[modelName]!;
     const actionResolversConfig = actionResolversMap[modelName];
-    if (resolverActionsConfig._all) {
-      const allActionsDecorators = resolverActionsConfig._all;
-      const resolverActionNames = crudResolversInfo[modelName as keyof typeof crudResolversInfo];
-      for (const resolverActionName of resolverActionNames) {
-        const actionTarget = (actionResolversConfig[
-          resolverActionName as keyof typeof actionResolversConfig
-        ] as Function).prototype;
-        tslib.__decorate(allActionsDecorators, crudTarget, resolverActionName, null);
-        tslib.__decorate(allActionsDecorators, actionTarget, resolverActionName, null);
-      }
-    }
-    const resolverActionsToApply = Object.keys(resolverActionsConfig).filter(
-      it => it !== "_all"
-    );
-    for (const resolverActionName of resolverActionsToApply) {
-      const decorators = resolverActionsConfig[
+    const allActionsDecorators = resolverActionsConfig._all ?? [];
+    const resolverActionNames = crudResolversInfo[modelName as keyof typeof crudResolversInfo];
+    for (const resolverActionName of resolverActionNames) {
+      const maybeDecoratorsOrFn = resolverActionsConfig[
         resolverActionName as keyof typeof resolverActionsConfig
-      ] as MethodDecorator[];
+      ] as MethodDecorator[] | MethodDecoratorOverrideFn | undefined;
+      let decorators: MethodDecorator[];
+      if (typeof maybeDecoratorsOrFn === "function") {
+        decorators = maybeDecoratorsOrFn(allActionsDecorators);
+      } else {
+        decorators = [...allActionsDecorators, ...maybeDecoratorsOrFn ?? []];
+      }
       const actionTarget = (actionResolversConfig[
         resolverActionName as keyof typeof actionResolversConfig
       ] as Function).prototype;
@@ -411,7 +456,7 @@ type ArgFieldNames<TArgsType extends ArgsTypesNames> = Exclude<
 
 type ArgFieldsConfig<
   TArgsType extends ArgsTypesNames
-  > = FieldsConfig<ArgFieldNames<TArgsType>>;
+> = FieldsConfig<ArgFieldNames<TArgsType>>;
 
 export type ArgConfig<TArgsType extends ArgsTypesNames> = {
   class?: ClassDecorator[];
@@ -472,10 +517,11 @@ type RelationResolverModelNames = keyof typeof relationResolversMap;
 
 type RelationResolverActionNames<
   TModel extends RelationResolverModelNames
-  > = keyof typeof relationResolversMap[TModel]["prototype"];
+> = keyof typeof relationResolversMap[TModel]["prototype"];
 
 export type RelationResolverActionsConfig<TModel extends RelationResolverModelNames>
-  = Partial<Record<RelationResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
+  = Partial<Record<RelationResolverActionNames<TModel>, MethodDecorator[] | MethodDecoratorOverrideFn>>
+  & { _all?: MethodDecorator[] };
 
 export type RelationResolversEnhanceMap = {
   [TModel in RelationResolverModelNames]?: RelationResolverActionsConfig<TModel>;
@@ -488,20 +534,18 @@ export function applyRelationResolversEnhanceMap(
     const modelName = relationResolversEnhanceMapKey as keyof typeof relationResolversEnhanceMap;
     const relationResolverTarget = relationResolversMap[modelName].prototype;
     const relationResolverActionsConfig = relationResolversEnhanceMap[modelName]!;
-    if (relationResolverActionsConfig._all) {
-      const allActionsDecorators = relationResolverActionsConfig._all;
-      const relationResolverActionNames = relationResolversInfo[modelName as keyof typeof relationResolversInfo];
-      for (const relationResolverActionName of relationResolverActionNames) {
-        tslib.__decorate(allActionsDecorators, relationResolverTarget, relationResolverActionName, null);
-      }
-    }
-    const relationResolverActionsToApply = Object.keys(relationResolverActionsConfig).filter(
-      it => it !== "_all"
-    );
-    for (const relationResolverActionName of relationResolverActionsToApply) {
-      const decorators = relationResolverActionsConfig[
+    const allActionsDecorators = relationResolverActionsConfig._all ?? [];
+    const relationResolverActionNames = relationResolversInfo[modelName as keyof typeof relationResolversInfo];
+    for (const relationResolverActionName of relationResolverActionNames) {
+      const maybeDecoratorsOrFn = relationResolverActionsConfig[
         relationResolverActionName as keyof typeof relationResolverActionsConfig
-      ] as MethodDecorator[];
+      ] as MethodDecorator[] | MethodDecoratorOverrideFn | undefined;
+      let decorators: MethodDecorator[];
+      if (typeof maybeDecoratorsOrFn === "function") {
+        decorators = maybeDecoratorsOrFn(allActionsDecorators);
+      } else {
+        decorators = [...allActionsDecorators, ...maybeDecoratorsOrFn ?? []];
+      }
       tslib.__decorate(decorators, relationResolverTarget, relationResolverActionName, null);
     }
   }
@@ -512,9 +556,11 @@ type TypeConfig = {
   fields?: FieldsConfig;
 };
 
+export type PropertyDecoratorOverrideFn = (decorators: PropertyDecorator[]) => PropertyDecorator[];
+
 type FieldsConfig<TTypeKeys extends string = string> = Partial<
-  Record<TTypeKeys | "_all", PropertyDecorator[]>
->;
+  Record<TTypeKeys, PropertyDecorator[] | PropertyDecoratorOverrideFn>
+> & { _all?: PropertyDecorator[] };
 
 function applyTypeClassEnhanceConfig<
   TEnhanceConfig extends TypeConfig,
@@ -529,18 +575,18 @@ function applyTypeClassEnhanceConfig<
     tslib.__decorate(enhanceConfig.class, typeClass);
   }
   if (enhanceConfig.fields) {
-    if (enhanceConfig.fields._all) {
-      const allFieldsDecorators = enhanceConfig.fields._all;
-      for (const typeFieldName of typeFieldNames) {
-        tslib.__decorate(allFieldsDecorators, typePrototype, typeFieldName, void 0);
+    const allFieldsDecorators = enhanceConfig.fields._all ?? [];
+    for (const typeFieldName of typeFieldNames) {
+      const maybeDecoratorsOrFn = enhanceConfig.fields[
+        typeFieldName
+      ] as PropertyDecorator[] | PropertyDecoratorOverrideFn | undefined;
+      let decorators: PropertyDecorator[];
+      if (typeof maybeDecoratorsOrFn === "function") {
+        decorators = maybeDecoratorsOrFn(allFieldsDecorators);
+      } else {
+        decorators = [...allFieldsDecorators, ...maybeDecoratorsOrFn ?? []];
       }
-    }
-    const configFieldsToApply = Object.keys(enhanceConfig.fields).filter(
-      it => it !== "_all"
-    );
-    for (const typeFieldName of configFieldsToApply) {
-      const fieldDecorators = enhanceConfig.fields[typeFieldName]!;
-      tslib.__decorate(fieldDecorators, typePrototype, typeFieldName, void 0);
+      tslib.__decorate(decorators, typePrototype, typeFieldName, void 0);
     }
   }
 }
@@ -697,7 +743,7 @@ type OutputTypeFieldNames<TOutput extends OutputTypesNames> = Exclude<
 
 type OutputTypeFieldsConfig<
   TOutput extends OutputTypesNames
-  > = FieldsConfig<OutputTypeFieldNames<TOutput>>;
+> = FieldsConfig<OutputTypeFieldNames<TOutput>>;
 
 export type OutputTypeConfig<TOutput extends OutputTypesNames> = {
   class?: ClassDecorator[];
@@ -726,38 +772,38 @@ export function applyOutputTypesEnhanceMap(
 }
 
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "password", "profile", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
-  UserOrderByWithRelationInput: ["id", "email", "password", "profile", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts", "recipes"],
+  UserOrderByWithRelationInput: ["id", "email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts", "recipes"],
   UserWhereUniqueInput: ["id", "email"],
   UserOrderByWithAggregationInput: ["id", "email", "password", "createdAt", "updatedAt", "_count", "_avg", "_max", "_min", "_sum"],
   UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "password", "createdAt", "updatedAt"],
-  ProfileWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
-  ProfileOrderByWithRelationInput: ["id", "user", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
+  ProfileWhereInput: ["AND", "OR", "NOT", "id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric", "user"],
+  ProfileOrderByWithRelationInput: ["id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric", "user"],
   ProfileWhereUniqueInput: ["id", "userId"],
   ProfileOrderByWithAggregationInput: ["id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric", "_count", "_avg", "_max", "_min", "_sum"],
   ProfileScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
-  WeighInWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "weight", "createdAt"],
-  WeighInOrderByWithRelationInput: ["id", "user", "userId", "weight", "createdAt"],
+  WeighInWhereInput: ["AND", "OR", "NOT", "id", "userId", "weight", "createdAt", "user"],
+  WeighInOrderByWithRelationInput: ["id", "userId", "weight", "createdAt", "user"],
   WeighInWhereUniqueInput: ["id"],
   WeighInOrderByWithAggregationInput: ["id", "userId", "weight", "createdAt", "_count", "_avg", "_max", "_min", "_sum"],
   WeighInScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "weight", "createdAt"],
-  WorkoutWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "name", "calories"],
-  WorkoutOrderByWithRelationInput: ["id", "user", "userId", "name", "calories"],
+  WorkoutWhereInput: ["AND", "OR", "NOT", "id", "userId", "name", "calories", "user"],
+  WorkoutOrderByWithRelationInput: ["id", "userId", "name", "calories", "user"],
   WorkoutWhereUniqueInput: ["id"],
   WorkoutOrderByWithAggregationInput: ["id", "userId", "name", "calories", "_count", "_avg", "_max", "_min", "_sum"],
   WorkoutScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "name", "calories"],
-  RecipeWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "name", "foods", "meals"],
-  RecipeOrderByWithRelationInput: ["id", "user", "userId", "name", "foods", "meals"],
+  RecipeWhereInput: ["AND", "OR", "NOT", "id", "userId", "name", "user", "foods", "meals"],
+  RecipeOrderByWithRelationInput: ["id", "userId", "name", "user", "foods", "meals"],
   RecipeWhereUniqueInput: ["id"],
   RecipeOrderByWithAggregationInput: ["id", "userId", "name", "_count", "_avg", "_max", "_min", "_sum"],
   RecipeScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "name"],
-  MealWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "mealType", "foods", "recipes"],
-  MealOrderByWithRelationInput: ["id", "user", "userId", "mealType", "foods", "recipes"],
+  MealWhereInput: ["AND", "OR", "NOT", "id", "userId", "mealType", "user", "foods", "recipes"],
+  MealOrderByWithRelationInput: ["id", "userId", "mealType", "user", "foods", "recipes"],
   MealWhereUniqueInput: ["id"],
   MealOrderByWithAggregationInput: ["id", "userId", "mealType", "_count", "_avg", "_max", "_min", "_sum"],
   MealScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "mealType"],
-  RecipeInMealWhereInput: ["AND", "OR", "NOT", "id", "recipe", "recipeId", "meal", "mealId", "quantity", "unit", "unitId"],
-  RecipeInMealOrderByWithRelationInput: ["id", "recipe", "recipeId", "meal", "mealId", "quantity", "unit", "unitId"],
+  RecipeInMealWhereInput: ["AND", "OR", "NOT", "id", "recipeId", "mealId", "quantity", "unitId", "recipe", "meal", "unit"],
+  RecipeInMealOrderByWithRelationInput: ["id", "recipeId", "mealId", "quantity", "unitId", "recipe", "meal", "unit"],
   RecipeInMealWhereUniqueInput: ["id"],
   RecipeInMealOrderByWithAggregationInput: ["id", "recipeId", "mealId", "quantity", "unitId", "_count", "_avg", "_max", "_min", "_sum"],
   RecipeInMealScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "recipeId", "mealId", "quantity", "unitId"],
@@ -766,18 +812,18 @@ const inputsInfo = {
   FoodWhereUniqueInput: ["id", "name_brand"],
   FoodOrderByWithAggregationInput: ["id", "name", "brand", "_count", "_avg", "_max", "_min", "_sum"],
   FoodScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "name", "brand"],
-  FoodNutritionWhereInput: ["AND", "OR", "NOT", "id", "food", "foodId", "quantity", "unit", "unitId", "calories", "protein", "fat", "carbs"],
-  FoodNutritionOrderByWithRelationInput: ["id", "food", "foodId", "quantity", "unit", "unitId", "calories", "protein", "fat", "carbs"],
+  FoodNutritionWhereInput: ["AND", "OR", "NOT", "id", "foodId", "quantity", "unitId", "calories", "protein", "fat", "carbs", "food", "unit"],
+  FoodNutritionOrderByWithRelationInput: ["id", "foodId", "quantity", "unitId", "calories", "protein", "fat", "carbs", "food", "unit"],
   FoodNutritionWhereUniqueInput: ["id"],
   FoodNutritionOrderByWithAggregationInput: ["id", "foodId", "quantity", "unitId", "calories", "protein", "fat", "carbs", "_count", "_avg", "_max", "_min", "_sum"],
   FoodNutritionScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "foodId", "quantity", "unitId", "calories", "protein", "fat", "carbs"],
-  FoodInRecipeWhereInput: ["AND", "OR", "NOT", "id", "food", "foodId", "recipe", "recipeId", "quantity", "unit", "unitId"],
-  FoodInRecipeOrderByWithRelationInput: ["id", "food", "foodId", "recipe", "recipeId", "quantity", "unit", "unitId"],
+  FoodInRecipeWhereInput: ["AND", "OR", "NOT", "id", "foodId", "recipeId", "quantity", "unitId", "food", "recipe", "unit"],
+  FoodInRecipeOrderByWithRelationInput: ["id", "foodId", "recipeId", "quantity", "unitId", "food", "recipe", "unit"],
   FoodInRecipeWhereUniqueInput: ["id"],
   FoodInRecipeOrderByWithAggregationInput: ["id", "foodId", "recipeId", "quantity", "unitId", "_count", "_avg", "_max", "_min", "_sum"],
   FoodInRecipeScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "foodId", "recipeId", "quantity", "unitId"],
-  FoodInMealWhereInput: ["AND", "OR", "NOT", "id", "food", "foodId", "meal", "mealId", "quantity", "unit", "unitId"],
-  FoodInMealOrderByWithRelationInput: ["id", "food", "foodId", "meal", "mealId", "quantity", "unit", "unitId"],
+  FoodInMealWhereInput: ["AND", "OR", "NOT", "id", "foodId", "mealId", "quantity", "unitId", "food", "meal", "unit"],
+  FoodInMealOrderByWithRelationInput: ["id", "foodId", "mealId", "quantity", "unitId", "food", "meal", "unit"],
   FoodInMealWhereUniqueInput: ["id"],
   FoodInMealOrderByWithAggregationInput: ["id", "foodId", "mealId", "quantity", "unitId", "_count", "_avg", "_max", "_min", "_sum"],
   FoodInMealScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "foodId", "mealId", "quantity", "unitId"],
@@ -786,48 +832,48 @@ const inputsInfo = {
   UnitWhereUniqueInput: ["id"],
   UnitOrderByWithAggregationInput: ["id", "name", "shortname", "volume", "_count", "_avg", "_max", "_min", "_sum"],
   UnitScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "name", "shortname", "volume"],
-  UserCreateInput: ["email", "password", "profile", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
-  UserUpdateInput: ["email", "password", "profile", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserCreateInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts", "recipes"],
+  UserUpdateInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts", "recipes"],
   UserCreateManyInput: ["id", "email", "password", "createdAt", "updatedAt"],
   UserUpdateManyMutationInput: ["email", "password", "createdAt", "updatedAt"],
-  ProfileCreateInput: ["user", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
-  ProfileUpdateInput: ["user", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
+  ProfileCreateInput: ["firstName", "lastName", "calorieGoal", "weightGoal", "metric", "user"],
+  ProfileUpdateInput: ["firstName", "lastName", "calorieGoal", "weightGoal", "metric", "user"],
   ProfileCreateManyInput: ["id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
   ProfileUpdateManyMutationInput: ["firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
-  WeighInCreateInput: ["user", "weight", "createdAt"],
-  WeighInUpdateInput: ["user", "weight", "createdAt"],
+  WeighInCreateInput: ["weight", "createdAt", "user"],
+  WeighInUpdateInput: ["weight", "createdAt", "user"],
   WeighInCreateManyInput: ["id", "userId", "weight", "createdAt"],
   WeighInUpdateManyMutationInput: ["weight", "createdAt"],
-  WorkoutCreateInput: ["user", "name", "calories"],
-  WorkoutUpdateInput: ["user", "name", "calories"],
+  WorkoutCreateInput: ["name", "calories", "user"],
+  WorkoutUpdateInput: ["name", "calories", "user"],
   WorkoutCreateManyInput: ["id", "userId", "name", "calories"],
   WorkoutUpdateManyMutationInput: ["name", "calories"],
-  RecipeCreateInput: ["user", "name", "foods", "meals"],
-  RecipeUpdateInput: ["user", "name", "foods", "meals"],
+  RecipeCreateInput: ["name", "user", "foods", "meals"],
+  RecipeUpdateInput: ["name", "user", "foods", "meals"],
   RecipeCreateManyInput: ["id", "userId", "name"],
   RecipeUpdateManyMutationInput: ["name"],
-  MealCreateInput: ["user", "mealType", "foods", "recipes"],
-  MealUpdateInput: ["user", "mealType", "foods", "recipes"],
+  MealCreateInput: ["mealType", "user", "foods", "recipes"],
+  MealUpdateInput: ["mealType", "user", "foods", "recipes"],
   MealCreateManyInput: ["id", "userId", "mealType"],
   MealUpdateManyMutationInput: ["mealType"],
-  RecipeInMealCreateInput: ["recipe", "meal", "quantity", "unit"],
-  RecipeInMealUpdateInput: ["recipe", "meal", "quantity", "unit"],
+  RecipeInMealCreateInput: ["quantity", "recipe", "meal", "unit"],
+  RecipeInMealUpdateInput: ["quantity", "recipe", "meal", "unit"],
   RecipeInMealCreateManyInput: ["id", "recipeId", "mealId", "quantity", "unitId"],
   RecipeInMealUpdateManyMutationInput: ["quantity"],
   FoodCreateInput: ["name", "brand", "nutrition", "meals", "recipes"],
   FoodUpdateInput: ["name", "brand", "nutrition", "meals", "recipes"],
   FoodCreateManyInput: ["id", "name", "brand"],
   FoodUpdateManyMutationInput: ["name", "brand"],
-  FoodNutritionCreateInput: ["food", "quantity", "unit", "calories", "protein", "fat", "carbs"],
-  FoodNutritionUpdateInput: ["food", "quantity", "unit", "calories", "protein", "fat", "carbs"],
+  FoodNutritionCreateInput: ["quantity", "calories", "protein", "fat", "carbs", "food", "unit"],
+  FoodNutritionUpdateInput: ["quantity", "calories", "protein", "fat", "carbs", "food", "unit"],
   FoodNutritionCreateManyInput: ["id", "foodId", "quantity", "unitId", "calories", "protein", "fat", "carbs"],
   FoodNutritionUpdateManyMutationInput: ["quantity", "calories", "protein", "fat", "carbs"],
-  FoodInRecipeCreateInput: ["food", "recipe", "quantity", "unit"],
-  FoodInRecipeUpdateInput: ["food", "recipe", "quantity", "unit"],
+  FoodInRecipeCreateInput: ["quantity", "food", "recipe", "unit"],
+  FoodInRecipeUpdateInput: ["quantity", "food", "recipe", "unit"],
   FoodInRecipeCreateManyInput: ["id", "foodId", "recipeId", "quantity", "unitId"],
   FoodInRecipeUpdateManyMutationInput: ["quantity"],
-  FoodInMealCreateInput: ["food", "meal", "quantity", "unit"],
-  FoodInMealUpdateInput: ["food", "meal", "quantity", "unit"],
+  FoodInMealCreateInput: ["quantity", "food", "meal", "unit"],
+  FoodInMealUpdateInput: ["quantity", "food", "meal", "unit"],
   FoodInMealCreateManyInput: ["id", "foodId", "mealId", "quantity", "unitId"],
   FoodInMealUpdateManyMutationInput: ["quantity"],
   UnitCreateInput: ["name", "shortname", "volume", "mealFoods", "mealRecipe", "recipeFoods", "foodNutrition"],
@@ -836,12 +882,12 @@ const inputsInfo = {
   UnitUpdateManyMutationInput: ["name", "shortname", "volume"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
+  DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   ProfileRelationFilter: ["is", "isNot"],
   MealListRelationFilter: ["every", "some", "none"],
   WeighInListRelationFilter: ["every", "some", "none"],
   WorkoutListRelationFilter: ["every", "some", "none"],
   RecipeListRelationFilter: ["every", "some", "none"],
-  DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   MealOrderByRelationAggregateInput: ["_count"],
   WeighInOrderByRelationAggregateInput: ["_count"],
   WorkoutOrderByRelationAggregateInput: ["_count"],
@@ -854,9 +900,9 @@ const inputsInfo = {
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_avg", "_sum", "_min", "_max"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "_count", "_min", "_max"],
   DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
-  UserRelationFilter: ["is", "isNot"],
   DecimalFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   BoolFilter: ["equals", "not"],
+  UserRelationFilter: ["is", "isNot"],
   ProfileCountOrderByAggregateInput: ["id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
   ProfileAvgOrderByAggregateInput: ["id", "userId", "calorieGoal", "weightGoal"],
   ProfileMaxOrderByAggregateInput: ["id", "userId", "firstName", "lastName", "calorieGoal", "weightGoal", "metric"],
@@ -935,17 +981,17 @@ const inputsInfo = {
   WorkoutCreateNestedManyWithoutUserInput: ["create", "connectOrCreate", "createMany", "connect"],
   RecipeCreateNestedManyWithoutUserInput: ["create", "connectOrCreate", "createMany", "connect"],
   StringFieldUpdateOperationsInput: ["set"],
+  DateTimeFieldUpdateOperationsInput: ["set"],
   ProfileUpdateOneWithoutUserNestedInput: ["create", "connectOrCreate", "upsert", "disconnect", "delete", "connect", "update"],
   MealUpdateManyWithoutUserNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   WeighInUpdateManyWithoutUserNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   WorkoutUpdateManyWithoutUserNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   RecipeUpdateManyWithoutUserNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
-  DateTimeFieldUpdateOperationsInput: ["set"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   UserCreateNestedOneWithoutProfileInput: ["create", "connectOrCreate", "connect"],
-  UserUpdateOneRequiredWithoutProfileNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   DecimalFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   BoolFieldUpdateOperationsInput: ["set"],
+  UserUpdateOneRequiredWithoutProfileNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   UserCreateNestedOneWithoutWeighInsInput: ["create", "connectOrCreate", "connect"],
   UserUpdateOneRequiredWithoutWeighInsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   UserCreateNestedOneWithoutWorkoutsInput: ["create", "connectOrCreate", "connect"],
@@ -959,8 +1005,8 @@ const inputsInfo = {
   UserCreateNestedOneWithoutMealsInput: ["create", "connectOrCreate", "connect"],
   FoodInMealCreateNestedManyWithoutMealInput: ["create", "connectOrCreate", "createMany", "connect"],
   RecipeInMealCreateNestedManyWithoutMealInput: ["create", "connectOrCreate", "createMany", "connect"],
-  UserUpdateOneRequiredWithoutMealsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   EnumMealTypeFieldUpdateOperationsInput: ["set"],
+  UserUpdateOneRequiredWithoutMealsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   FoodInMealUpdateManyWithoutMealNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   RecipeInMealUpdateManyWithoutMealNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   RecipeCreateNestedOneWithoutMealsInput: ["create", "connectOrCreate", "connect"],
@@ -1044,28 +1090,28 @@ const inputsInfo = {
   RecipeUpdateWithWhereUniqueWithoutUserInput: ["where", "data"],
   RecipeUpdateManyWithWhereWithoutUserInput: ["where", "data"],
   RecipeScalarWhereInput: ["AND", "OR", "NOT", "id", "userId", "name"],
-  UserCreateWithoutProfileInput: ["email", "password", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserCreateWithoutProfileInput: ["email", "password", "createdAt", "updatedAt", "meals", "weighIns", "workouts", "recipes"],
   UserCreateOrConnectWithoutProfileInput: ["where", "create"],
   UserUpsertWithoutProfileInput: ["update", "create"],
-  UserUpdateWithoutProfileInput: ["email", "password", "meals", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
-  UserCreateWithoutWeighInsInput: ["email", "password", "profile", "meals", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserUpdateWithoutProfileInput: ["email", "password", "createdAt", "updatedAt", "meals", "weighIns", "workouts", "recipes"],
+  UserCreateWithoutWeighInsInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "workouts", "recipes"],
   UserCreateOrConnectWithoutWeighInsInput: ["where", "create"],
   UserUpsertWithoutWeighInsInput: ["update", "create"],
-  UserUpdateWithoutWeighInsInput: ["email", "password", "profile", "meals", "workouts", "recipes", "createdAt", "updatedAt"],
-  UserCreateWithoutWorkoutsInput: ["email", "password", "profile", "meals", "weighIns", "recipes", "createdAt", "updatedAt"],
+  UserUpdateWithoutWeighInsInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "workouts", "recipes"],
+  UserCreateWithoutWorkoutsInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "recipes"],
   UserCreateOrConnectWithoutWorkoutsInput: ["where", "create"],
   UserUpsertWithoutWorkoutsInput: ["update", "create"],
-  UserUpdateWithoutWorkoutsInput: ["email", "password", "profile", "meals", "weighIns", "recipes", "createdAt", "updatedAt"],
-  UserCreateWithoutRecipesInput: ["email", "password", "profile", "meals", "weighIns", "workouts", "createdAt", "updatedAt"],
+  UserUpdateWithoutWorkoutsInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "recipes"],
+  UserCreateWithoutRecipesInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts"],
   UserCreateOrConnectWithoutRecipesInput: ["where", "create"],
-  FoodInRecipeCreateWithoutRecipeInput: ["food", "quantity", "unit"],
+  FoodInRecipeCreateWithoutRecipeInput: ["quantity", "food", "unit"],
   FoodInRecipeCreateOrConnectWithoutRecipeInput: ["where", "create"],
   FoodInRecipeCreateManyRecipeInputEnvelope: ["data", "skipDuplicates"],
-  RecipeInMealCreateWithoutRecipeInput: ["meal", "quantity", "unit"],
+  RecipeInMealCreateWithoutRecipeInput: ["quantity", "meal", "unit"],
   RecipeInMealCreateOrConnectWithoutRecipeInput: ["where", "create"],
   RecipeInMealCreateManyRecipeInputEnvelope: ["data", "skipDuplicates"],
   UserUpsertWithoutRecipesInput: ["update", "create"],
-  UserUpdateWithoutRecipesInput: ["email", "password", "profile", "meals", "weighIns", "workouts", "createdAt", "updatedAt"],
+  UserUpdateWithoutRecipesInput: ["email", "password", "createdAt", "updatedAt", "profile", "meals", "weighIns", "workouts"],
   FoodInRecipeUpsertWithWhereUniqueWithoutRecipeInput: ["where", "update", "create"],
   FoodInRecipeUpdateWithWhereUniqueWithoutRecipeInput: ["where", "data"],
   FoodInRecipeUpdateManyWithWhereWithoutRecipeInput: ["where", "data"],
@@ -1074,16 +1120,16 @@ const inputsInfo = {
   RecipeInMealUpdateWithWhereUniqueWithoutRecipeInput: ["where", "data"],
   RecipeInMealUpdateManyWithWhereWithoutRecipeInput: ["where", "data"],
   RecipeInMealScalarWhereInput: ["AND", "OR", "NOT", "id", "recipeId", "mealId", "quantity", "unitId"],
-  UserCreateWithoutMealsInput: ["email", "password", "profile", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserCreateWithoutMealsInput: ["email", "password", "createdAt", "updatedAt", "profile", "weighIns", "workouts", "recipes"],
   UserCreateOrConnectWithoutMealsInput: ["where", "create"],
-  FoodInMealCreateWithoutMealInput: ["food", "quantity", "unit"],
+  FoodInMealCreateWithoutMealInput: ["quantity", "food", "unit"],
   FoodInMealCreateOrConnectWithoutMealInput: ["where", "create"],
   FoodInMealCreateManyMealInputEnvelope: ["data", "skipDuplicates"],
-  RecipeInMealCreateWithoutMealInput: ["recipe", "quantity", "unit"],
+  RecipeInMealCreateWithoutMealInput: ["quantity", "recipe", "unit"],
   RecipeInMealCreateOrConnectWithoutMealInput: ["where", "create"],
   RecipeInMealCreateManyMealInputEnvelope: ["data", "skipDuplicates"],
   UserUpsertWithoutMealsInput: ["update", "create"],
-  UserUpdateWithoutMealsInput: ["email", "password", "profile", "weighIns", "workouts", "recipes", "createdAt", "updatedAt"],
+  UserUpdateWithoutMealsInput: ["email", "password", "createdAt", "updatedAt", "profile", "weighIns", "workouts", "recipes"],
   FoodInMealUpsertWithWhereUniqueWithoutMealInput: ["where", "update", "create"],
   FoodInMealUpdateWithWhereUniqueWithoutMealInput: ["where", "data"],
   FoodInMealUpdateManyWithWhereWithoutMealInput: ["where", "data"],
@@ -1091,25 +1137,25 @@ const inputsInfo = {
   RecipeInMealUpsertWithWhereUniqueWithoutMealInput: ["where", "update", "create"],
   RecipeInMealUpdateWithWhereUniqueWithoutMealInput: ["where", "data"],
   RecipeInMealUpdateManyWithWhereWithoutMealInput: ["where", "data"],
-  RecipeCreateWithoutMealsInput: ["user", "name", "foods"],
+  RecipeCreateWithoutMealsInput: ["name", "user", "foods"],
   RecipeCreateOrConnectWithoutMealsInput: ["where", "create"],
-  MealCreateWithoutRecipesInput: ["user", "mealType", "foods"],
+  MealCreateWithoutRecipesInput: ["mealType", "user", "foods"],
   MealCreateOrConnectWithoutRecipesInput: ["where", "create"],
   UnitCreateWithoutMealRecipeInput: ["name", "shortname", "volume", "mealFoods", "recipeFoods", "foodNutrition"],
   UnitCreateOrConnectWithoutMealRecipeInput: ["where", "create"],
   RecipeUpsertWithoutMealsInput: ["update", "create"],
-  RecipeUpdateWithoutMealsInput: ["user", "name", "foods"],
+  RecipeUpdateWithoutMealsInput: ["name", "user", "foods"],
   MealUpsertWithoutRecipesInput: ["update", "create"],
-  MealUpdateWithoutRecipesInput: ["user", "mealType", "foods"],
+  MealUpdateWithoutRecipesInput: ["mealType", "user", "foods"],
   UnitUpsertWithoutMealRecipeInput: ["update", "create"],
   UnitUpdateWithoutMealRecipeInput: ["name", "shortname", "volume", "mealFoods", "recipeFoods", "foodNutrition"],
-  FoodNutritionCreateWithoutFoodInput: ["quantity", "unit", "calories", "protein", "fat", "carbs"],
+  FoodNutritionCreateWithoutFoodInput: ["quantity", "calories", "protein", "fat", "carbs", "unit"],
   FoodNutritionCreateOrConnectWithoutFoodInput: ["where", "create"],
   FoodNutritionCreateManyFoodInputEnvelope: ["data", "skipDuplicates"],
-  FoodInMealCreateWithoutFoodInput: ["meal", "quantity", "unit"],
+  FoodInMealCreateWithoutFoodInput: ["quantity", "meal", "unit"],
   FoodInMealCreateOrConnectWithoutFoodInput: ["where", "create"],
   FoodInMealCreateManyFoodInputEnvelope: ["data", "skipDuplicates"],
-  FoodInRecipeCreateWithoutFoodInput: ["recipe", "quantity", "unit"],
+  FoodInRecipeCreateWithoutFoodInput: ["quantity", "recipe", "unit"],
   FoodInRecipeCreateOrConnectWithoutFoodInput: ["where", "create"],
   FoodInRecipeCreateManyFoodInputEnvelope: ["data", "skipDuplicates"],
   FoodNutritionUpsertWithWhereUniqueWithoutFoodInput: ["where", "update", "create"],
@@ -1132,38 +1178,38 @@ const inputsInfo = {
   UnitUpdateWithoutFoodNutritionInput: ["name", "shortname", "volume", "mealFoods", "mealRecipe", "recipeFoods"],
   FoodCreateWithoutRecipesInput: ["name", "brand", "nutrition", "meals"],
   FoodCreateOrConnectWithoutRecipesInput: ["where", "create"],
-  RecipeCreateWithoutFoodsInput: ["user", "name", "meals"],
+  RecipeCreateWithoutFoodsInput: ["name", "user", "meals"],
   RecipeCreateOrConnectWithoutFoodsInput: ["where", "create"],
   UnitCreateWithoutRecipeFoodsInput: ["name", "shortname", "volume", "mealFoods", "mealRecipe", "foodNutrition"],
   UnitCreateOrConnectWithoutRecipeFoodsInput: ["where", "create"],
   FoodUpsertWithoutRecipesInput: ["update", "create"],
   FoodUpdateWithoutRecipesInput: ["name", "brand", "nutrition", "meals"],
   RecipeUpsertWithoutFoodsInput: ["update", "create"],
-  RecipeUpdateWithoutFoodsInput: ["user", "name", "meals"],
+  RecipeUpdateWithoutFoodsInput: ["name", "user", "meals"],
   UnitUpsertWithoutRecipeFoodsInput: ["update", "create"],
   UnitUpdateWithoutRecipeFoodsInput: ["name", "shortname", "volume", "mealFoods", "mealRecipe", "foodNutrition"],
   FoodCreateWithoutMealsInput: ["name", "brand", "nutrition", "recipes"],
   FoodCreateOrConnectWithoutMealsInput: ["where", "create"],
-  MealCreateWithoutFoodsInput: ["user", "mealType", "recipes"],
+  MealCreateWithoutFoodsInput: ["mealType", "user", "recipes"],
   MealCreateOrConnectWithoutFoodsInput: ["where", "create"],
   UnitCreateWithoutMealFoodsInput: ["name", "shortname", "volume", "mealRecipe", "recipeFoods", "foodNutrition"],
   UnitCreateOrConnectWithoutMealFoodsInput: ["where", "create"],
   FoodUpsertWithoutMealsInput: ["update", "create"],
   FoodUpdateWithoutMealsInput: ["name", "brand", "nutrition", "recipes"],
   MealUpsertWithoutFoodsInput: ["update", "create"],
-  MealUpdateWithoutFoodsInput: ["user", "mealType", "recipes"],
+  MealUpdateWithoutFoodsInput: ["mealType", "user", "recipes"],
   UnitUpsertWithoutMealFoodsInput: ["update", "create"],
   UnitUpdateWithoutMealFoodsInput: ["name", "shortname", "volume", "mealRecipe", "recipeFoods", "foodNutrition"],
-  FoodInMealCreateWithoutUnitInput: ["food", "meal", "quantity"],
+  FoodInMealCreateWithoutUnitInput: ["quantity", "food", "meal"],
   FoodInMealCreateOrConnectWithoutUnitInput: ["where", "create"],
   FoodInMealCreateManyUnitInputEnvelope: ["data", "skipDuplicates"],
-  RecipeInMealCreateWithoutUnitInput: ["recipe", "meal", "quantity"],
+  RecipeInMealCreateWithoutUnitInput: ["quantity", "recipe", "meal"],
   RecipeInMealCreateOrConnectWithoutUnitInput: ["where", "create"],
   RecipeInMealCreateManyUnitInputEnvelope: ["data", "skipDuplicates"],
-  FoodInRecipeCreateWithoutUnitInput: ["food", "recipe", "quantity"],
+  FoodInRecipeCreateWithoutUnitInput: ["quantity", "food", "recipe"],
   FoodInRecipeCreateOrConnectWithoutUnitInput: ["where", "create"],
   FoodInRecipeCreateManyUnitInputEnvelope: ["data", "skipDuplicates"],
-  FoodNutritionCreateWithoutUnitInput: ["food", "quantity", "calories", "protein", "fat", "carbs"],
+  FoodNutritionCreateWithoutUnitInput: ["quantity", "calories", "protein", "fat", "carbs", "food"],
   FoodNutritionCreateOrConnectWithoutUnitInput: ["where", "create"],
   FoodNutritionCreateManyUnitInputEnvelope: ["data", "skipDuplicates"],
   FoodInMealUpsertWithWhereUniqueWithoutUnitInput: ["where", "update", "create"],
@@ -1188,26 +1234,26 @@ const inputsInfo = {
   RecipeUpdateWithoutUserInput: ["name", "foods", "meals"],
   FoodInRecipeCreateManyRecipeInput: ["id", "foodId", "quantity", "unitId"],
   RecipeInMealCreateManyRecipeInput: ["id", "mealId", "quantity", "unitId"],
-  FoodInRecipeUpdateWithoutRecipeInput: ["food", "quantity", "unit"],
-  RecipeInMealUpdateWithoutRecipeInput: ["meal", "quantity", "unit"],
+  FoodInRecipeUpdateWithoutRecipeInput: ["quantity", "food", "unit"],
+  RecipeInMealUpdateWithoutRecipeInput: ["quantity", "meal", "unit"],
   FoodInMealCreateManyMealInput: ["id", "foodId", "quantity", "unitId"],
   RecipeInMealCreateManyMealInput: ["id", "recipeId", "quantity", "unitId"],
-  FoodInMealUpdateWithoutMealInput: ["food", "quantity", "unit"],
-  RecipeInMealUpdateWithoutMealInput: ["recipe", "quantity", "unit"],
+  FoodInMealUpdateWithoutMealInput: ["quantity", "food", "unit"],
+  RecipeInMealUpdateWithoutMealInput: ["quantity", "recipe", "unit"],
   FoodNutritionCreateManyFoodInput: ["id", "quantity", "unitId", "calories", "protein", "fat", "carbs"],
   FoodInMealCreateManyFoodInput: ["id", "mealId", "quantity", "unitId"],
   FoodInRecipeCreateManyFoodInput: ["id", "recipeId", "quantity", "unitId"],
-  FoodNutritionUpdateWithoutFoodInput: ["quantity", "unit", "calories", "protein", "fat", "carbs"],
-  FoodInMealUpdateWithoutFoodInput: ["meal", "quantity", "unit"],
-  FoodInRecipeUpdateWithoutFoodInput: ["recipe", "quantity", "unit"],
+  FoodNutritionUpdateWithoutFoodInput: ["quantity", "calories", "protein", "fat", "carbs", "unit"],
+  FoodInMealUpdateWithoutFoodInput: ["quantity", "meal", "unit"],
+  FoodInRecipeUpdateWithoutFoodInput: ["quantity", "recipe", "unit"],
   FoodInMealCreateManyUnitInput: ["id", "foodId", "mealId", "quantity"],
   RecipeInMealCreateManyUnitInput: ["id", "recipeId", "mealId", "quantity"],
   FoodInRecipeCreateManyUnitInput: ["id", "foodId", "recipeId", "quantity"],
   FoodNutritionCreateManyUnitInput: ["id", "foodId", "quantity", "calories", "protein", "fat", "carbs"],
-  FoodInMealUpdateWithoutUnitInput: ["food", "meal", "quantity"],
-  RecipeInMealUpdateWithoutUnitInput: ["recipe", "meal", "quantity"],
-  FoodInRecipeUpdateWithoutUnitInput: ["food", "recipe", "quantity"],
-  FoodNutritionUpdateWithoutUnitInput: ["food", "quantity", "calories", "protein", "fat", "carbs"]
+  FoodInMealUpdateWithoutUnitInput: ["quantity", "food", "meal"],
+  RecipeInMealUpdateWithoutUnitInput: ["quantity", "recipe", "meal"],
+  FoodInRecipeUpdateWithoutUnitInput: ["quantity", "food", "recipe"],
+  FoodNutritionUpdateWithoutUnitInput: ["quantity", "calories", "protein", "fat", "carbs", "food"]
 };
 
 type InputTypesNames = keyof typeof inputTypes;
@@ -1219,7 +1265,7 @@ type InputTypeFieldNames<TInput extends InputTypesNames> = Exclude<
 
 type InputTypeFieldsConfig<
   TInput extends InputTypesNames
-  > = FieldsConfig<InputTypeFieldNames<TInput>>;
+> = FieldsConfig<InputTypeFieldNames<TInput>>;
 
 export type InputTypeConfig<TInput extends InputTypesNames> = {
   class?: ClassDecorator[];

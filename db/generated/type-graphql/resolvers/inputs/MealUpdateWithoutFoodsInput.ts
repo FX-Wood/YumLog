@@ -10,15 +10,15 @@ import { UserUpdateOneRequiredWithoutMealsNestedInput } from "../inputs/UserUpda
   isAbstract: true
 })
 export class MealUpdateWithoutFoodsInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutMealsNestedInput, {
-    nullable: true
-  })
-  user?: UserUpdateOneRequiredWithoutMealsNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => EnumMealTypeFieldUpdateOperationsInput, {
     nullable: true
   })
   mealType?: EnumMealTypeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutMealsNestedInput, {
+    nullable: true
+  })
+  user?: UserUpdateOneRequiredWithoutMealsNestedInput | undefined;
 
   @TypeGraphQL.Field(_type => RecipeInMealUpdateManyWithoutMealNestedInput, {
     nullable: true

@@ -8,11 +8,6 @@ import { UserCreateNestedOneWithoutWeighInsInput } from "../inputs/UserCreateNes
   isAbstract: true
 })
 export class WeighInCreateInput {
-  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutWeighInsInput, {
-    nullable: false
-  })
-  user!: UserCreateNestedOneWithoutWeighInsInput;
-
   @TypeGraphQL.Field(_type => DecimalJSScalar, {
     nullable: false
   })
@@ -22,4 +17,9 @@ export class WeighInCreateInput {
     nullable: true
   })
   createdAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutWeighInsInput, {
+    nullable: false
+  })
+  user!: UserCreateNestedOneWithoutWeighInsInput;
 }

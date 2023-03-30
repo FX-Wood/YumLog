@@ -10,11 +10,6 @@ import { UserUpdateOneRequiredWithoutWorkoutsNestedInput } from "../inputs/UserU
   isAbstract: true
 })
 export class WorkoutUpdateInput {
-  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutWorkoutsNestedInput, {
-    nullable: true
-  })
-  user?: UserUpdateOneRequiredWithoutWorkoutsNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -24,4 +19,9 @@ export class WorkoutUpdateInput {
     nullable: true
   })
   calories?: IntFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserUpdateOneRequiredWithoutWorkoutsNestedInput, {
+    nullable: true
+  })
+  user?: UserUpdateOneRequiredWithoutWorkoutsNestedInput | undefined;
 }

@@ -28,6 +28,16 @@ export class UserOrderByWithRelationInput {
   })
   password?: "asc" | "desc" | undefined;
 
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  createdAt?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  updatedAt?: "asc" | "desc" | undefined;
+
   @TypeGraphQL.Field(_type => ProfileOrderByWithRelationInput, {
     nullable: true
   })
@@ -52,14 +62,4 @@ export class UserOrderByWithRelationInput {
     nullable: true
   })
   recipes?: RecipeOrderByRelationAggregateInput | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true
-  })
-  createdAt?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true
-  })
-  updatedAt?: "asc" | "desc" | undefined;
 }

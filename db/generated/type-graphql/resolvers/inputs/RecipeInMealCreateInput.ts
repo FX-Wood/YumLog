@@ -10,6 +10,11 @@ import { UnitCreateNestedOneWithoutMealRecipeInput } from "../inputs/UnitCreateN
   isAbstract: true
 })
 export class RecipeInMealCreateInput {
+  @TypeGraphQL.Field(_type => DecimalJSScalar, {
+    nullable: false
+  })
+  quantity!: Prisma.Decimal;
+
   @TypeGraphQL.Field(_type => RecipeCreateNestedOneWithoutMealsInput, {
     nullable: false
   })
@@ -19,11 +24,6 @@ export class RecipeInMealCreateInput {
     nullable: false
   })
   meal!: MealCreateNestedOneWithoutRecipesInput;
-
-  @TypeGraphQL.Field(_type => DecimalJSScalar, {
-    nullable: false
-  })
-  quantity!: Prisma.Decimal;
 
   @TypeGraphQL.Field(_type => UnitCreateNestedOneWithoutMealRecipeInput, {
     nullable: false

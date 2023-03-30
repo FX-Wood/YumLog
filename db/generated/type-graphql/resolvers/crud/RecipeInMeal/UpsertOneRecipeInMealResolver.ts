@@ -1,9 +1,8 @@
 import * as TypeGraphQL from "type-graphql";
-import graphqlFields from "graphql-fields";
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { UpsertOneRecipeInMealArgs } from "./args/UpsertOneRecipeInMealArgs";
 import { RecipeInMeal } from "../../../models/RecipeInMeal";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => RecipeInMeal)
 export class UpsertOneRecipeInMealResolver {
@@ -11,9 +10,7 @@ export class UpsertOneRecipeInMealResolver {
     nullable: false
   })
   async upsertOneRecipeInMeal(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpsertOneRecipeInMealArgs): Promise<RecipeInMeal> {
-    const { _count } = transformFields(
-      graphqlFields(info as any)
-    );
+    const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).recipeInMeal.upsert({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),

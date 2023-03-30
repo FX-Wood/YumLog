@@ -21,6 +21,16 @@ export class UserCreateWithoutProfileInput {
   })
   password!: string;
 
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  updatedAt?: Date | undefined;
+
   @TypeGraphQL.Field(_type => MealCreateNestedManyWithoutUserInput, {
     nullable: true
   })
@@ -40,14 +50,4 @@ export class UserCreateWithoutProfileInput {
     nullable: true
   })
   recipes?: RecipeCreateNestedManyWithoutUserInput | undefined;
-
-  @TypeGraphQL.Field(_type => Date, {
-    nullable: true
-  })
-  createdAt?: Date | undefined;
-
-  @TypeGraphQL.Field(_type => Date, {
-    nullable: true
-  })
-  updatedAt?: Date | undefined;
 }

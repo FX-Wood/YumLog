@@ -11,20 +11,10 @@ import { UnitUpdateOneRequiredWithoutFoodNutritionNestedInput } from "../inputs/
   isAbstract: true
 })
 export class FoodNutritionUpdateInput {
-  @TypeGraphQL.Field(_type => FoodUpdateOneRequiredWithoutNutritionNestedInput, {
-    nullable: true
-  })
-  food?: FoodUpdateOneRequiredWithoutNutritionNestedInput | undefined;
-
   @TypeGraphQL.Field(_type => DecimalFieldUpdateOperationsInput, {
     nullable: true
   })
   quantity?: DecimalFieldUpdateOperationsInput | undefined;
-
-  @TypeGraphQL.Field(_type => UnitUpdateOneRequiredWithoutFoodNutritionNestedInput, {
-    nullable: true
-  })
-  unit?: UnitUpdateOneRequiredWithoutFoodNutritionNestedInput | undefined;
 
   @TypeGraphQL.Field(_type => IntFieldUpdateOperationsInput, {
     nullable: true
@@ -45,4 +35,14 @@ export class FoodNutritionUpdateInput {
     nullable: true
   })
   carbs?: DecimalFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => FoodUpdateOneRequiredWithoutNutritionNestedInput, {
+    nullable: true
+  })
+  food?: FoodUpdateOneRequiredWithoutNutritionNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => UnitUpdateOneRequiredWithoutFoodNutritionNestedInput, {
+    nullable: true
+  })
+  unit?: UnitUpdateOneRequiredWithoutFoodNutritionNestedInput | undefined;
 }

@@ -1,9 +1,8 @@
 import * as TypeGraphQL from "type-graphql";
-import graphqlFields from "graphql-fields";
-import { GraphQLResolveInfo } from "graphql";
+import type { GraphQLResolveInfo } from "graphql";
 import { DeleteOneRecipeArgs } from "./args/DeleteOneRecipeArgs";
 import { Recipe } from "../../../models/Recipe";
-import { transformFields, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
 
 @TypeGraphQL.Resolver(_of => Recipe)
 export class DeleteOneRecipeResolver {
@@ -11,9 +10,7 @@ export class DeleteOneRecipeResolver {
     nullable: true
   })
   async deleteOneRecipe(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: DeleteOneRecipeArgs): Promise<Recipe | null> {
-    const { _count } = transformFields(
-      graphqlFields(info as any)
-    );
+    const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).recipe.delete({
       ...args,
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
