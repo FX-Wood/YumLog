@@ -1,11 +1,12 @@
+import "reflect-metadata"
+import { resolvers } from '../db/generated/type-graphql'
 import { buildSchema } from 'type-graphql'
+import { PrismaClient } from '@prisma/client'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { PrismaClient } from '@prisma/client'
 
-import { resolvers } from '../db/generated/type-graphql'
-
-interface Context {
+// see https://www.apollographql.com/docs/apollo-server/api/standalone/
+interface MyContext {
   prisma: PrismaClient
 }
 
@@ -15,12 +16,17 @@ async function serve() {
     validate: false
   })
   const prisma = new PrismaClient()
-  const server = new ApolloServer({
-    schema,
-    context: (): Context => ({ prisma }),
+  const server = new ApolloServer<MyContext>({
+    schema: schema
   })
-  const { port } = await server.listen(3001)
-  console.log(`Apollo server is listening on ${port}`)
+  const { url } = await startStandaloneServer(server, { 
+    listen: { port: 4000 },
+    context: async () => ({ prisma })
+  })
+  console.log(`Apollo server: ${url}`)
 }
 
-
+serve()
+  .catch(e => {
+    console.error(e)
+  })

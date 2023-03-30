@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "apollo": "ts-node --transpile-only ./apollo/index.ts"
   },
   "prisma": {
     "schema": "db/schema.prisma",
@@ -21,7 +22,7 @@
     "class-validator": "^0.14.0",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
-    "graphql": "^15.8.0",
+    "graphql": "^16.6.0",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.21.3",
     "next": "13.2.4",
@@ -29,11 +30,11 @@
     "react-dom": "18.2.0",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.5.0",
-    "type-graphql": "^1.1.1",
+    "type-graphql": "^2.0.0-beta.1",
     "typescript": "5.0.2"
   },
   "devDependencies": {
     "ts-node": "^10.9.1",
-    "typegraphql-prisma": "^0.21.5"
+    "typegraphql-prisma": "^0.24.5"
   }
 }
