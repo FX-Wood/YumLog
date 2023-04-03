@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { MealUpdateManyWithoutUserNestedInput } from "../inputs/MealUpdateManyWithoutUserNestedInput";
 import { RecipeUpdateManyWithoutUserNestedInput } from "../inputs/RecipeUpdateManyWithoutUserNestedInput";
+import { RoleUpdateOneWithoutUsersNestedInput } from "../inputs/RoleUpdateOneWithoutUsersNestedInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 import { WeighInUpdateManyWithoutUserNestedInput } from "../inputs/WeighInUpdateManyWithoutUserNestedInput";
 import { WorkoutUpdateManyWithoutUserNestedInput } from "../inputs/WorkoutUpdateManyWithoutUserNestedInput";
@@ -32,6 +33,11 @@ export class UserUpdateWithoutProfileInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => RoleUpdateOneWithoutUsersNestedInput, {
+    nullable: true
+  })
+  role?: RoleUpdateOneWithoutUsersNestedInput | undefined;
 
   @TypeGraphQL.Field(_type => MealUpdateManyWithoutUserNestedInput, {
     nullable: true

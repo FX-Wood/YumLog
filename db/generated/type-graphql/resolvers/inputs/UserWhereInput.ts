@@ -7,6 +7,7 @@ import { IntFilter } from "../inputs/IntFilter";
 import { MealListRelationFilter } from "../inputs/MealListRelationFilter";
 import { ProfileRelationFilter } from "../inputs/ProfileRelationFilter";
 import { RecipeListRelationFilter } from "../inputs/RecipeListRelationFilter";
+import { RoleRelationFilter } from "../inputs/RoleRelationFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { WeighInListRelationFilter } from "../inputs/WeighInListRelationFilter";
 import { WorkoutListRelationFilter } from "../inputs/WorkoutListRelationFilter";
@@ -45,6 +46,11 @@ export class UserWhereInput {
   })
   password?: StringFilter | undefined;
 
+  @TypeGraphQL.Field(_type => IntFilter, {
+    nullable: true
+  })
+  roleId?: IntFilter | undefined;
+
   @TypeGraphQL.Field(_type => DateTimeFilter, {
     nullable: true
   })
@@ -59,6 +65,11 @@ export class UserWhereInput {
     nullable: true
   })
   profile?: ProfileRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => RoleRelationFilter, {
+    nullable: true
+  })
+  role?: RoleRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => MealListRelationFilter, {
     nullable: true

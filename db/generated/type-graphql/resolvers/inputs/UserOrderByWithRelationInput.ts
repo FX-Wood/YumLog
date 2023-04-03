@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { MealOrderByRelationAggregateInput } from "../inputs/MealOrderByRelationAggregateInput";
 import { ProfileOrderByWithRelationInput } from "../inputs/ProfileOrderByWithRelationInput";
 import { RecipeOrderByRelationAggregateInput } from "../inputs/RecipeOrderByRelationAggregateInput";
+import { RoleOrderByWithRelationInput } from "../inputs/RoleOrderByWithRelationInput";
 import { WeighInOrderByRelationAggregateInput } from "../inputs/WeighInOrderByRelationAggregateInput";
 import { WorkoutOrderByRelationAggregateInput } from "../inputs/WorkoutOrderByRelationAggregateInput";
 import { SortOrder } from "../../enums/SortOrder";
@@ -31,6 +32,11 @@ export class UserOrderByWithRelationInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
+  roleId?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
   createdAt?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
@@ -42,6 +48,11 @@ export class UserOrderByWithRelationInput {
     nullable: true
   })
   profile?: ProfileOrderByWithRelationInput | undefined;
+
+  @TypeGraphQL.Field(_type => RoleOrderByWithRelationInput, {
+    nullable: true
+  })
+  role?: RoleOrderByWithRelationInput | undefined;
 
   @TypeGraphQL.Field(_type => MealOrderByRelationAggregateInput, {
     nullable: true

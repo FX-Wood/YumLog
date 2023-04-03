@@ -12,4 +12,9 @@ export class UserSumOrderByAggregateInput {
     nullable: true
   })
   id?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
+  roleId?: "asc" | "desc" | undefined;
 }

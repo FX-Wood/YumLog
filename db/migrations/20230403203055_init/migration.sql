@@ -6,10 +6,19 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "roleId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Role" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -64,16 +73,37 @@ CREATE TABLE "Meal" (
 );
 
 -- CreateTable
+CREATE TABLE "RecipeInMeal" (
+    "id" SERIAL NOT NULL,
+    "recipeId" INTEGER NOT NULL,
+    "mealId" INTEGER NOT NULL,
+    "quantity" DECIMAL(65,30) NOT NULL,
+    "unitId" INTEGER NOT NULL,
+
+    CONSTRAINT "RecipeInMeal_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Food" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "brand" TEXT NOT NULL,
+
+    CONSTRAINT "Food_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "FoodNutrition" (
+    "id" SERIAL NOT NULL,
+    "foodId" INTEGER NOT NULL,
+    "quantity" DECIMAL(65,30) NOT NULL,
+    "unitId" INTEGER NOT NULL,
     "calories" INTEGER NOT NULL,
     "protein" DECIMAL(65,30) NOT NULL,
     "fat" DECIMAL(65,30) NOT NULL,
     "carbs" DECIMAL(65,30) NOT NULL,
 
-    CONSTRAINT "Food_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "FoodNutrition_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -102,7 +132,8 @@ CREATE TABLE "FoodInMeal" (
 CREATE TABLE "Unit" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "abbreviation" TEXT NOT NULL,
+    "shortname" TEXT NOT NULL,
+    "volume" BOOLEAN NOT NULL,
 
     CONSTRAINT "Unit_pkey" PRIMARY KEY ("id")
 );
@@ -115,6 +146,9 @@ CREATE UNIQUE INDEX "Profile_userId_key" ON "Profile"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Food_name_brand_key" ON "Food"("name", "brand");
+
+-- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -130,6 +164,21 @@ ALTER TABLE "Recipe" ADD CONSTRAINT "Recipe_userId_fkey" FOREIGN KEY ("userId") 
 
 -- AddForeignKey
 ALTER TABLE "Meal" ADD CONSTRAINT "Meal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RecipeInMeal" ADD CONSTRAINT "RecipeInMeal_recipeId_fkey" FOREIGN KEY ("recipeId") REFERENCES "Recipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RecipeInMeal" ADD CONSTRAINT "RecipeInMeal_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RecipeInMeal" ADD CONSTRAINT "RecipeInMeal_unitId_fkey" FOREIGN KEY ("unitId") REFERENCES "Unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FoodNutrition" ADD CONSTRAINT "FoodNutrition_foodId_fkey" FOREIGN KEY ("foodId") REFERENCES "Food"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FoodNutrition" ADD CONSTRAINT "FoodNutrition_unitId_fkey" FOREIGN KEY ("unitId") REFERENCES "Unit"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FoodInRecipe" ADD CONSTRAINT "FoodInRecipe_foodId_fkey" FOREIGN KEY ("foodId") REFERENCES "Food"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -6,6 +6,7 @@ export { MealCrudResolver } from "./Meal/MealCrudResolver";
 export { ProfileCrudResolver } from "./Profile/ProfileCrudResolver";
 export { RecipeCrudResolver } from "./Recipe/RecipeCrudResolver";
 export { RecipeInMealCrudResolver } from "./RecipeInMeal/RecipeInMealCrudResolver";
+export { RoleCrudResolver } from "./Role/RoleCrudResolver";
 export { UnitCrudResolver } from "./Unit/UnitCrudResolver";
 export { UserCrudResolver } from "./User/UserCrudResolver";
 export { WeighInCrudResolver } from "./WeighIn/WeighInCrudResolver";

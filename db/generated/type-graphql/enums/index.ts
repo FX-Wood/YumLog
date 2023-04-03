@@ -8,6 +8,7 @@ export { ProfileScalarFieldEnum } from "./ProfileScalarFieldEnum";
 export { QueryMode } from "./QueryMode";
 export { RecipeInMealScalarFieldEnum } from "./RecipeInMealScalarFieldEnum";
 export { RecipeScalarFieldEnum } from "./RecipeScalarFieldEnum";
+export { RoleScalarFieldEnum } from "./RoleScalarFieldEnum";
 export { SortOrder } from "./SortOrder";
 export { TransactionIsolationLevel } from "./TransactionIsolationLevel";
 export { UnitScalarFieldEnum } from "./UnitScalarFieldEnum";

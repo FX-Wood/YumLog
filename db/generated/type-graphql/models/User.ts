@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../scalars";
 import { Meal } from "../models/Meal";
 import { Profile } from "../models/Profile";
 import { Recipe } from "../models/Recipe";
+import { Role } from "../models/Role";
 import { WeighIn } from "../models/WeighIn";
 import { Workout } from "../models/Workout";
 import { UserCount } from "../resolvers/outputs/UserCount";
@@ -29,6 +30,13 @@ export class User {
   password!: string;
 
   profile?: Profile | null;
+
+  role?: Role | null;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: false
+  })
+  roleId!: number;
 
   meals?: Meal[];
 

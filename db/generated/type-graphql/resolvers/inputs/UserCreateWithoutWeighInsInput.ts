@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { MealCreateNestedManyWithoutUserInput } from "../inputs/MealCreateNestedManyWithoutUserInput";
 import { ProfileCreateNestedOneWithoutUserInput } from "../inputs/ProfileCreateNestedOneWithoutUserInput";
 import { RecipeCreateNestedManyWithoutUserInput } from "../inputs/RecipeCreateNestedManyWithoutUserInput";
+import { RoleCreateNestedOneWithoutUsersInput } from "../inputs/RoleCreateNestedOneWithoutUsersInput";
 import { WorkoutCreateNestedManyWithoutUserInput } from "../inputs/WorkoutCreateNestedManyWithoutUserInput";
 
 @TypeGraphQL.InputType("UserCreateWithoutWeighInsInput", {
@@ -35,6 +36,11 @@ export class UserCreateWithoutWeighInsInput {
     nullable: true
   })
   profile?: ProfileCreateNestedOneWithoutUserInput | undefined;
+
+  @TypeGraphQL.Field(_type => RoleCreateNestedOneWithoutUsersInput, {
+    nullable: true
+  })
+  role?: RoleCreateNestedOneWithoutUsersInput | undefined;
 
   @TypeGraphQL.Field(_type => MealCreateNestedManyWithoutUserInput, {
     nullable: true

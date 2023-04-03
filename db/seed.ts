@@ -1,16 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import { Slabo_27px } from 'next/font/google'
 const prisma = new PrismaClient()
 
 async function main() {
-  
-  await prisma.foodNutrition.deleteMany()
-  await prisma.food.deleteMany()
-  
-  await prisma.unit.deleteMany()
-
-  await prisma.profile.deleteMany()
-  await prisma.user.deleteMany()
+  // to delete dev data run:
+  // npx prisma migrate reset --skip-seed
 
   await prisma.unit.createMany({
     data: [
@@ -32,6 +25,20 @@ async function main() {
     ]
   })
 
+  await prisma.role.createMany({
+    data: [
+      {
+        name: 'admin'
+      },
+      {
+        name: 'user'
+      }
+    ]
+  })
+
+  const user = await prisma.role.findFirst({ where: { name: 'user' }})
+  const admin = await prisma.role.findFirst({ where: { name: 'admin'}})
+
   const gram = await prisma.unit.findFirst({ where: { name: 'gram' } })
   const cup = await prisma.unit.findFirst({ where: { name: 'cup' } })
   const medium = await prisma.unit.findFirst({ where: { name: 'medium' } })
@@ -40,6 +47,7 @@ async function main() {
     data: {
       email: 'test@test.com',
       password: 'asdfasdfasdf',
+      roleId: user.id,
       profile: {
         create: {
           firstName: 'Terry',

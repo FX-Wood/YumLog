@@ -22,6 +22,11 @@ export class UserMinAggregate {
   })
   password!: string | null;
 
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: true
+  })
+  roleId!: number | null;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

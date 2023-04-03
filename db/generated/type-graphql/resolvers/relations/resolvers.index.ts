@@ -6,6 +6,7 @@ export { MealRelationsResolver } from "./Meal/MealRelationsResolver";
 export { ProfileRelationsResolver } from "./Profile/ProfileRelationsResolver";
 export { RecipeRelationsResolver } from "./Recipe/RecipeRelationsResolver";
 export { RecipeInMealRelationsResolver } from "./RecipeInMeal/RecipeInMealRelationsResolver";
+export { RoleRelationsResolver } from "./Role/RoleRelationsResolver";
 export { UnitRelationsResolver } from "./Unit/UnitRelationsResolver";
 export { UserRelationsResolver } from "./User/UserRelationsResolver";
 export { WeighInRelationsResolver } from "./WeighIn/WeighInRelationsResolver";

@@ -40,6 +40,11 @@ export class UserScalarWhereWithAggregatesInput {
   })
   password?: StringWithAggregatesFilter | undefined;
 
+  @TypeGraphQL.Field(_type => IntWithAggregatesFilter, {
+    nullable: true
+  })
+  roleId?: IntWithAggregatesFilter | undefined;
+
   @TypeGraphQL.Field(_type => DateTimeWithAggregatesFilter, {
     nullable: true
   })

@@ -3,6 +3,7 @@ import type { GraphQLResolveInfo } from "graphql";
 import { Meal } from "../../../models/Meal";
 import { Profile } from "../../../models/Profile";
 import { Recipe } from "../../../models/Recipe";
+import { Role } from "../../../models/Role";
 import { User } from "../../../models/User";
 import { WeighIn } from "../../../models/WeighIn";
 import { Workout } from "../../../models/Workout";
@@ -24,6 +25,20 @@ export class UserRelationsResolver {
         id: user.id,
       },
     }).profile({
+      ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
+    });
+  }
+
+  @TypeGraphQL.FieldResolver(_type => Role, {
+    nullable: true
+  })
+  async role(@TypeGraphQL.Root() user: User, @TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo): Promise<Role | null> {
+    const { _count } = transformInfoIntoPrismaArgs(info);
+    return getPrismaFromContext(ctx).user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+    }).role({
       ...(_count && transformCountFieldIntoSelectRelationsCount(_count)),
     });
   }
