@@ -1,91 +1,50 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+"use client";
+import { Typography, TextField, Button, Grid, Stack } from "@mui/material";
+import { useState } from "react";
+import { getClient } from "@/lib/apollo-client";
+import { gql, useMutation } from "@apollo/client";
+import { UserRegisterInput } from '../../apollo/custom-resolvers/register';
 
 export default function Home() {
+  const REGISTER = gql`mutation Register($data: UserRegisterInput!) {
+    register(data: $data) {
+      email
+        password
+    }
+  }`
+  const client = getClient()
+  const [isNewUser, setIsNewUser] = useState(true)
+  
+  if (isNewUser) {
+    const [register, { data, loading, error }] = useMutation(REGISTER, { client })
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const data = new FormData(e.currentTarget)
+      const mutationInput: UserRegisterInput = {
+        email: String(data.get('email')),
+        password: String(data.get('password'))
+      }
+      await register({ variables: { data: mutationInput }}) 
+    }
+    return (
+      <Grid container height="100vh" alignItems="center" justifyContent="center" direction="column">
+        <Typography variant="h4" component="h1">YumLog</Typography>
+        <Stack component="form" onSubmit={handleRegister} direction="column" spacing={1}>
+          <TextField id="email" name="email" label="Email"  variant="outlined" autoFocus />
+          <TextField id="password" name="password" label="Password" variant="outlined" />
+          <Button type="submit" variant="contained">Register New Account</Button>
+        </Stack>
+      </Grid>
+    )
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      <Grid container height="100vh" alignItems="center" justifyContent="center" direction="column">
+        <Typography variant="h4" component="h1">YumLog</Typography>
+        <Stack component="form" direction="column" spacing={1}>
+          <TextField id="email" label="email" variant="outlined" />
+          <TextField id="password" label="password" variant="outlined" />
+          <Button variant="contained">Log In</Button>
+        </Stack>
+      </Grid>
+  );
 }

@@ -28,7 +28,7 @@ class RegisterResolver {
         password: hashedPassword,
         role: {
           connect: {
-            id: userRole.id
+            id: userRole?.id
           }
         }
       }

@@ -3,6 +3,7 @@ import { expressMiddleware } from '@apollo/server/express4'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import express from 'express'
 import http from 'http'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import { ApolloServer } from '@apollo/server'
 import Context from './context'
@@ -28,6 +29,7 @@ async function serve() {
   
   app.use(
     bodyParser.json(),
+    cors(),
     expressMiddleware(server, {
       context: async () => ({ prisma })
     })
