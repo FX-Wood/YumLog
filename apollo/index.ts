@@ -10,6 +10,7 @@ import Context from './context'
 import { PrismaClient } from '@prisma/client'
 import { resolvers } from '../db/generated/type-graphql'
 import RegisterResolver from './custom-resolvers/register'
+import LoginResolver from './custom-resolvers/login'
 import { buildSchema } from 'type-graphql'
 
 async function serve() {
@@ -17,7 +18,11 @@ async function serve() {
   const httpServer = http.createServer(app)
 
   const schema = await buildSchema({ 
-    resolvers: [RegisterResolver, ...resolvers],
+    resolvers: [
+      RegisterResolver,
+      LoginResolver,
+      ...resolvers
+    ],
     validate: false
   })
   const prisma = new PrismaClient()
