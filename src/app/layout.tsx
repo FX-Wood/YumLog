@@ -5,8 +5,6 @@ export const metadata = {
   description: 'Track your Yum',
 }
 
-
-
 export default function RootLayout({
   children,
 }: {

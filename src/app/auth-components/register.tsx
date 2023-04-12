@@ -1,27 +1,52 @@
 "use client";
 import { TextField, Button, Stack } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 import { getClient } from "@/lib/apollo-client";
 import { gql, useMutation } from "@apollo/client";
-import { UserRegisterInput } from '../../../apollo/custom-resolvers/register';
+import { UserCredentialInput } from '../../../apollo/custom-resolvers/auth-types';
 
-const REGISTER = gql`mutation Register($data: UserRegisterInput!) {
+const REGISTER = gql`mutation Register($data: UserCredentialInput!) {
   register(data: $data) {
-    email
-    password
+    ... on AuthSuccess {
+      user {
+        email
+      }
+      jwt
+    }
+    ... on AuthError {
+      code
+      message
+    }
   }
 }`
   
 export default function Register() {
   const client = getClient()
-  const [register, { data, loading, error }] = useMutation(REGISTER, { client })
+  const [register] = useMutation(REGISTER, { client })
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
-    const mutationInput: UserRegisterInput = {
-      email: String(data.get('email')),
-      password: String(data.get('password'))
+    const mutationInput: UserCredentialInput = {
+      email: e.currentTarget.email.value,
+      password: e.currentTarget.password.value
     }
-    await register({ variables: { data: mutationInput }}) 
+    const { data } = await register({ variables: { data: mutationInput }}) 
+    console.log(data)
+    console.log(data.register.message)
+    if (data.register.code) {
+        enqueueSnackbar({ 
+            variant: 'error',
+            autoHideDuration: 3000,
+            message: data.register.message
+        })
+    }
+    if (data.register.user) {
+        enqueueSnackbar({
+            variant: 'success',
+            autoHideDuration: 3000,
+            message: "Login successful",
+        })
+        localStorage.setItem('yumlog:jwt', data.register.jwt)
+    }
   }
   return (
     <Stack component="form" onSubmit={handleRegister} direction="column" spacing={1}>

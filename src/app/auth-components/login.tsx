@@ -1,27 +1,50 @@
 "use client";
 import { TextField, Button, Stack } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
 import { getClient } from "@/lib/apollo-client";
 import { gql, useMutation } from "@apollo/client";
-import { UserLoginInput } from '../../../apollo/custom-resolvers/login';
+import { UserCredentialInput } from '../../../apollo/custom-resolvers/auth-types';
 
-const LOGIN = gql`mutation Login($data: UserLoginInput!) {
+const LOGIN = gql`mutation Login($data: UserCredentialInput!) {
   login(data: $data) {
-    email
-    password
+    ... on AuthSuccess {
+      user {
+        email
+      }
+      jwt
+    }
+    ... on AuthError {
+      code
+      message
+    }
   }
 }`
 
 export default function Login() {
   const client = getClient()
-  const [login, { data, loading, error }] = useMutation(LOGIN, { client })
+  const [ login ] = useMutation(LOGIN, { client })
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
-    const mutationInput: UserLoginInput = {
-      email: String(data.get('email')),
-      password: String(data.get('password'))
+    const mutationInput: UserCredentialInput = {
+      email: e.currentTarget.email.value,
+      password: e.currentTarget.password.value
     }
-    await login({ variables: { data: mutationInput }})
+    const res = await login({ variables: { data: mutationInput }})
+    if (res.data.login.code) {
+        enqueueSnackbar({ 
+            variant: 'error',
+            autoHideDuration: 3000,
+            message: res.data.message
+        })
+    }
+    if (res.data.login.user) {
+        enqueueSnackbar({
+            variant: 'success',
+            autoHideDuration: 3000,
+            message: "Login successful",
+        })
+        localStorage.setItem('yumlog:jwt', res.data.login.jwt)
+    }
   }
 
   return (
