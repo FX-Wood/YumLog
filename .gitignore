@@ -4,3 +4,6 @@
 node_modules
 .DS_Store
 
+# Key files for jwt secrets
+*.key.*
+*.key
